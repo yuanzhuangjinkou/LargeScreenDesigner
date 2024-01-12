@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.dataease</groupId>
         <artifactId>view-bubblemap</artifactId>
-        <version>${dataease.version}</version>
+        <version>1.18.14</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

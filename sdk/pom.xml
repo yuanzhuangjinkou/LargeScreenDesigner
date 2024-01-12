@@ -6,12 +6,12 @@
 
     <artifactId>dataease-extension-sdk</artifactId>
     <packaging>pom</packaging>
-    <version>${dataease.version}</version>
+    <version>1.18.14</version>
 
     <parent>
         <groupId>io.dataease</groupId>
         <artifactId>dataease</artifactId>
-        <version>${dataease.version}</version>
+        <version>1.18.14</version>
     </parent>
 
     <modules>
@@ -31,7 +31,7 @@
             <dependency>
                 <groupId>io.dataease</groupId>
                 <artifactId>dataease-plugin-common</artifactId>
-                <version>${dataease.version}</version>
+                <version>1.18.14</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -48,6 +48,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.18</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

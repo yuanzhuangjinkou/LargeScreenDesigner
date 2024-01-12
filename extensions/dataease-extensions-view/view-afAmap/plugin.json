@@ -1,0 +1,13 @@
+{
+    "name": "afAmap",
+    "free": 0,
+    "store": "thirdpart",
+    "cost": 0,
+    "category": "view",
+    "descript": "afAmap",
+    "version": "1.18.12",
+    "creator": "DATAEASE",
+    "moduleName": "view-afAmap-backend",
+    "require": "1.10.0",
+    "dsType": ""
+}
