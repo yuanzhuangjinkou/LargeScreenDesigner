@@ -34,15 +34,17 @@
 <script>
 import {
   uuid
-} from '@/utils/map'
+} from '../../../..//utils/map'
 import BMap from '../BMap';
-import ViewTrackBar from '@/components/views/ViewTrackBar'
+import WindowInfo from "../WindowInfo.vue";
+import ViewTrackBar from '../../../../components/views/ViewTrackBar'
 
 export default {
   name: "ChartComponent",
   components: {
     BMap,
-    ViewTrackBar
+    ViewTrackBar,
+    WindowInfo
   },
   data() {
     return {
@@ -60,17 +62,11 @@ export default {
         {position: [109.10, 34.49], type: 5, title: '通源', text: '通源', isShow: true},
         {position: [108.64, 34.08], type: 5, title: '西户', text: '西户', isShow: true},
         {position: [109.03, 34.49], type: 5, title: '陕西玉祥', text: '陕西玉祥', isShow: true},
-        // {position: [109.312423, 34.201563], type: 5, title: '蓝田城燃', text: '蓝田城燃', isShow: true},
-        // {position: [109.23, 34.66], type: 5, title: '中民', text: '中民', isShow: true},
-        // {position: [108.33, 34.09], type: 5, title: '周至玉祥', text: '周至玉祥', isShow: true},
-        // {position: [108.66, 34.20], type: 5, title: '西沣', text: '西沣', isShow: true},
-        // {position: [109.26, 34.27], type: 5, title: '昱恒燃气', text: '昱恒燃气', isShow: true},
-        // 分公司范围中心坐标点
         // TODO 计算范围中心点函数不显示弹窗，暂时用标记点代替
-        {position: [108.82, 34.27], type: 6, title: '城西分公司', text: '城西分公司', isShow: true},
-        {position: [108.98, 34.38], type: 6, title: '城北分公司', text: '城北分公司', isShow: true},
-        {position: [109.08, 34.23], type: 6, title: '城东分公司', text: '城东分公司', isShow: true},
-        {position: [108.94, 34.22], type: 6, title: '城南分公司', text: '城南分公司', isShow: true},
+        {position: [108.82, 34.27], type: 6, title: '场站', text: '场站', isShow: true},
+        {position: [108.98, 34.38], type: 6, title: '调压箱', text: '调压箱', isShow: true},
+        {position: [109.08, 34.23], type: 6, title: '分输站', text: '分输站', isShow: true},
+        {position: [108.94, 34.22], type: 6, title: '营业厅', text: '营业厅', isShow: true},
       ],
       // 秦华分公司边界
       companyBoarder: [
@@ -3624,20 +3620,23 @@ export default {
   },
   methods: {
     async markerClick(e) {
+
       // 获取点击的点的名称,用来判断是否需要显示弹窗
       let name = e.target.De.title
-      if(name.includes('分公司')) {
+      console.log('markerClick_', '点击: ' + name)
+      // if(name.includes('分公司')) {
         // 请求数据
         const params = {
           tableName: 'T_CUSTOMER_DATA_STATISTICS',
           condition: `F_DEPNAME = '${name}'`
         }
-        await currentPOST('commonQuery', params).then(res => {
+        console.log('markerClick_', name)
+        let res = '[{"f_medium_pressure":938.64,"f_registrant":null,"f_business":3427,"f_low_pressure":1361.16,"f_high_pressure":null,"f_input_date":"2023-06-20 15:08:40","id":4,"f_depname":"A 场站","f_resident":870208}]';
+        res = JSON.parse(res)
           this.infoWindow.info.branchName = name;
           this.infoWindow.info.residentsCount = res[0].f_resident;
           this.infoWindow.info.nonResidentCount = res[0].f_business;
           this.infoWindow.info.pipelineLength = res[0].f_high_pressure + res[0].f_medium_pressure + res[0].f_low_pressure;
-        })
 
         // 遍历标记点隐藏被点击的
         this.markerList.forEach(item => item.isShow = item.title !== name)
@@ -3651,10 +3650,11 @@ export default {
           e.target.getPosition()
         );
         e.target.getMap().setCenter(e.lnglat.offset(0, 0))
-      }
+      // }
     },
     // 地图点击事件
     windowClose () {
+      console.log('>>>> 地图点击')
       // 遍历标记点显示被隐藏的
       this.markerList.forEach(item => item.isShow = true)
       // 关闭弹窗
@@ -3749,37 +3749,37 @@ export default {
     this.showPipe = ["HP"];
   },
   // 启动项目需要注释 props, computed
-  // props: {
-  //   obj: {
-  //     type: Object,
-  //     required: true
-  //   }
-  // },
-  // computed: {
-  //   trackBarStyleTime() {
-  //     return this.trackBarStyle
-  //   },
-  //   active() {
-  //     return this.obj.active
-  //   },
-  //   chart() {
-  //     return this.obj.chart
-  //   },
-  //   filter() {
-  //     return this.obj.filter || {}
-  //   },
-  //   trackMenu() {
-  //     console.log('trackMenu_', this.obj.trackMenu)
-  //     return this.obj.trackMenu || ['drill']
-  //   },
-  //   searchCount() {
-  //     return this.obj.searchCount || 0
-  //   },
-  //   terminalType() {
-  //     return this.obj.terminalType || 'pc'
-  //   }
-  //
-  // },
+  props: {
+    obj: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    trackBarStyleTime() {
+      return this.trackBarStyle
+    },
+    active() {
+      return this.obj.active
+    },
+    chart() {
+      return this.obj.chart
+    },
+    filter() {
+      return this.obj.filter || {}
+    },
+    trackMenu() {
+      console.log('trackMenu_', this.obj.trackMenu)
+      return this.obj.trackMenu || ['drill']
+    },
+    searchCount() {
+      return this.obj.searchCount || 0
+    },
+    terminalType() {
+      return this.obj.terminalType || 'pc'
+    }
+
+  },
   watch: {
     active: {
       handler(newVal, oldVla) {

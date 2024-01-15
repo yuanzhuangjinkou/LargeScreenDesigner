@@ -79,11 +79,11 @@
 </template>
 
 <script>
-import DimensionItem from '@/components/views/DimensionItem'
-import QuotaItem from '@/components/views/QuotaItem'
-import FilterItem from '@/components/views/FilterItem'
-import DrillItem from '@/components/views/DrillItem'
-import messages from '@/de-base/lang/messages'
+import DimensionItem from '../../../../components/views/DimensionItem'
+import QuotaItem from '../../../../components/views/QuotaItem'
+import FilterItem from '../../../../components/views/FilterItem'
+import DrillItem from '../../../../components/views/DrillItem'
+import messages from '../../../../de-base/lang/messages'
 export default {
   props: {
 

@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { compareItem } from '@/utils/compare'
+import { compareItem } from '../../utils/compare'
 import { getItemType } from './utils'
 import FieldErrorTips from './FieldErrorTips'
 export default {

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import messages from '@/de-base/lang/messages'
+import messages from '../../../../de-base/lang/messages'
 export default {
   data() {
     return {
