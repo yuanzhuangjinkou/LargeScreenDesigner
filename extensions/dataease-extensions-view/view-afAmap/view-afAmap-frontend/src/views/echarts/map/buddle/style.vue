@@ -75,73 +75,73 @@
 // import TitleSelector from "../../../../components/selector/TitleSelector";
 // import TooltipSelector from "../../../../components/selector/TooltipSelector";
 // import SuspensionSelector from "../../../../components/selector/SuspensionSelector";
-// export default {
-//   components: {
-//     ColorSelector,
-//     LabelSelector,
-//     TitleSelector,
-//     TooltipSelector,
-//     SuspensionSelector,
-//   },
-//   data() {
-//     return {
-//       attrActiveNames: [],
-//       styleActiveNames: [],
-//     };
-//   },
-//   props: {
-//     obj: {
-//       type: Object,
-//       default: () => {},
-//     },
-//   },
-//
-//   computed: {
-//     param() {
-//       return this.obj.param;
-//     },
-//     view() {
-//       return this.obj.view;
-//     },
-//     chart() {
-//       return this.obj.chart;
-//     },
-//   },
-//   methods: {
-//     onColorChange(val) {
-//       this.view.customAttr.color = val;
-//       this.calcStyle();
-//     },
-//     onLabelChange(val) {
-//       this.view.customAttr.label = val;
-//       this.calcStyle();
-//     },
-//
-//     onTooltipChange(val) {
-//       this.view.customAttr.tooltip = val;
-//       this.calcStyle();
-//     },
-//     onSuspensionChange(val) {
-//       this.view.customAttr.suspension = val;
-//       this.calcStyle();
-//     },
-//     onTextChange(val) {
-//       this.view.customStyle.text = val;
-//       this.view.title = val.title;
-//       this.calcStyle();
-//     },
-//     onChangeBackgroundForm(val) {
-//       this.view.customStyle.background = val;
-//       this.calcStyle();
-//     },
-//     calcStyle() {
-//       this.$emit("plugin-call-back", {
-//         eventName: "plugins-calc-style",
-//         eventParam: this.view,
-//       });
-//     },
-//   },
-// };
+export default {
+  components: {
+    // ColorSelector,
+    // LabelSelector,
+    // TitleSelector,
+    // TooltipSelector,
+    // SuspensionSelector,
+  },
+  data() {
+    return {
+      attrActiveNames: [],
+      styleActiveNames: [],
+    };
+  },
+  props: {
+    obj: {
+      type: Object,
+      default: () => {},
+    },
+  },
+
+  computed: {
+    param() {
+      return this.obj.param;
+    },
+    view() {
+      return this.obj.view;
+    },
+    chart() {
+      return this.obj.chart;
+    },
+  },
+  methods: {
+    onColorChange(val) {
+      this.view.customAttr.color = val;
+      this.calcStyle();
+    },
+    onLabelChange(val) {
+      this.view.customAttr.label = val;
+      this.calcStyle();
+    },
+
+    onTooltipChange(val) {
+      this.view.customAttr.tooltip = val;
+      this.calcStyle();
+    },
+    onSuspensionChange(val) {
+      this.view.customAttr.suspension = val;
+      this.calcStyle();
+    },
+    onTextChange(val) {
+      this.view.customStyle.text = val;
+      this.view.title = val.title;
+      this.calcStyle();
+    },
+    onChangeBackgroundForm(val) {
+      this.view.customStyle.background = val;
+      this.calcStyle();
+    },
+    calcStyle() {
+      this.$emit("plugin-call-back", {
+        eventName: "plugins-calc-style",
+        eventParam: this.view,
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
