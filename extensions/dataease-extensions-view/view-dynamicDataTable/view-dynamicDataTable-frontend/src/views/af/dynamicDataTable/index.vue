@@ -1,19 +1,19 @@
 <template>
   <div>
-    <view-track-bar
-      ref="viewTrack"
-      :track-menu="trackMenu"
-      class="track-bar"
-      :style="trackBarStyleTime"
-      @trackClick="trackClick"
-    />
+<!--    <view-track-bar-->
+<!--      ref="viewTrack"-->
+<!--      :track-menu="trackMenu"-->
+<!--      class="track-bar"-->
+<!--      :style="trackBarStyleTime"-->
+<!--      @trackClick="trackClick"-->
+<!--    />-->
     <div class="scroll-container">
       <!-- 遍历数据 -->
-      <div v-for="(item, index) in p" :key="index" class="data-row">
+      <div v-for="(item, index) in data" :key="index" class="data-row">
         <!-- 动态展示数据 -->
         <div class="back">
           <a-row class="custom-row">
-            <img class="custom-img image_21" src="../../../assets/组3908@2x.png" alt="">
+            <img class="custom-img" src="../../../assets/yuncheng/组3908@2x.png" alt="">
             <span class="custom-span">{{ item.name }}</span>
           </a-row>
 
@@ -21,14 +21,14 @@
             <a-col :align="'left'" :span="12" v-for="(value, key, index) in item" :key="key" v-if="key !== 'name'">
               <div class="data-column">
                 <div class="dot"></div>
-                <span class="custom-key">{{ param[key] }}</span>
+                <span class="custom-key">{{ zhCN[key] }}</span>
                 <span class="custom-value">{{ value }}</span>
                 <!-- 温度 -->
-                <span v-if="param[key].includes('温度')" class="custom-value"> (℃) </span>
+                <span v-if="zhCN[key].includes('温度')" class="custom-value"> (℃) </span>
                 <!-- 流量 -->
-                <span v-if="param[key].includes('流量')" class="custom-value"> (m³/h) </span>
+                <span v-if="zhCN[key].includes('流量')" class="custom-value"> (m³/h) </span>
                 <!-- 压力 -->
-                <span v-if="param[key].includes('压力')" class="custom-value"> (mpa) </span>
+                <span v-if="zhCN[key].includes('压力')" class="custom-value"> (mpa) </span>
               </div>
             </a-col>
           </a-row>
@@ -40,16 +40,17 @@
 
 <script>
 export default {
+  // import vie
   name: 'test',
   data() {
     return {
-      param: {
+      zhCN: {
         T1: "温度",
         T2: "瞬时流量",
         T3: "压力",
         T4: "累计流量",
       },
-      p: [
+      data: [
         {
           name: "667场站",
           T1: 1,
@@ -170,19 +171,21 @@ export default {
   watch: {
     active: {
       handler(newVal, oldVla) {
-        console.log('this.active', JSON.stringify(this.active))
-        this.scrollStatusChange(newVal)
+        console.log('dynamicDataTable_this.active', JSON.stringify(this.active))
       }
     },
     chart: {
       handler(newVal, oldVal) {
-        console.log('this.chart', JSON.stringify(this.chart))
+        console.log('this.obj', JSON.stringify(this.obj))
+        console.log('dynamicDataTable_this.chart', JSON.stringify(this.chart))
         if (this.chart) {
-          // const val = this.chart.data.x;
-          // this.stationClick(val)
+          this.zhCN = JSON.parse(this.chart.data.x[0]).zhCN
+          this.data = JSON.parse(this.chart.data.x[0]).data
+          this.$forceUpdate();
         }
       },
-      deep: true
+      deep: true,
+      immediate:true, // 首次加载的时候执行函数
     }
   },
 };
@@ -221,13 +224,14 @@ export default {
   margin-right: 5px; /* Optional: Add margin to create space between the dot and text */
 }
 
-.image_21 {
-  width: 80px;
-  height: 80px;
+.custom-img {
+  width: 51px;
+  height: 51px;
 }
 
 .custom-span {
-  font-size: 40px;
+  font-size: 26px;
+  //color: #FFFFFF;
 }
 
 .data-row {
@@ -253,16 +257,16 @@ export default {
 .custom-key {
   width: 69px;
   height: 40px;
-  font-size: 35px;
+  font-size: 25px;
   font-weight: 500;
-  color: #FFFFFF;
+  //color: #FFFFFF;
   line-height: 40px;
 }
 
 .custom-value {
   width: 34px;
   height: 30px;
-  font-size: 45px;
+  font-size: 25px;
   font-weight: 400;
   color: #18FEFE;
 }
