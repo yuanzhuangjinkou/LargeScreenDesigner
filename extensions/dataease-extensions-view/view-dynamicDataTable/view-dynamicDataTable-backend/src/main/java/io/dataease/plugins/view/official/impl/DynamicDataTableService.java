@@ -4,7 +4,7 @@ import io.dataease.plugins.common.dto.StaticResource;
 import io.dataease.plugins.view.entity.PluginViewField;
 import io.dataease.plugins.view.entity.PluginViewParam;
 import io.dataease.plugins.view.entity.PluginViewType;
-import io.dataease.plugins.view.official.handler.AfaMapViewStatHandler;
+import io.dataease.plugins.view.official.handler.DynamicDataTableViewStatHandler;
 import io.dataease.plugins.view.service.ViewPluginService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -107,7 +107,7 @@ public class DynamicDataTableService extends ViewPluginService {
         if (CollectionUtils.isEmpty(xAxis)) {
             return null;
         }
-        String sql = new AfaMapViewStatHandler().build(param, this);
+        String sql = new DynamicDataTableViewStatHandler().build(param, this);
 
         return sql;
 //        List<PluginViewField> xAxis = param.getFieldsByType("xAxis");

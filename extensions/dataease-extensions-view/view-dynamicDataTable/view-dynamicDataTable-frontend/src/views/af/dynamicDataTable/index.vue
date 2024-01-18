@@ -1,12 +1,12 @@
 <template>
   <div>
-<!--    <view-track-bar-->
-<!--      ref="viewTrack"-->
-<!--      :track-menu="trackMenu"-->
-<!--      class="track-bar"-->
-<!--      :style="trackBarStyleTime"-->
-<!--      @trackClick="trackClick"-->
-<!--    />-->
+    <view-track-bar
+      ref="viewTrack"
+      :track-menu="trackMenu"
+      class="track-bar"
+      :style="trackBarStyleTime"
+      @trackClick="trackClick"
+    />
     <div class="scroll-container">
       <!-- 遍历数据 -->
       <div v-for="(item, index) in data" :key="index" class="data-row">
@@ -17,9 +17,10 @@
             <span class="custom-span">{{ item.name }}</span>
           </a-row>
 
-          <a-row :gutter="20">
+          <a-row >
             <a-col :align="'left'" :span="12" v-for="(value, key, index) in item" :key="key" v-if="key !== 'name'">
               <div class="data-column">
+                <!-- 点 -->
                 <div class="dot"></div>
                 <span class="custom-key">{{ zhCN[key] }}</span>
                 <span class="custom-value">{{ value }}</span>
@@ -39,9 +40,15 @@
 </template>
 
 <script>
+
+import viewTrackBar from '../../../components/views/ViewTrackBar'
+
 export default {
   // import vie
   name: 'test',
+  components: {
+    viewTrackBar
+  },
   data() {
     return {
       zhCN: {
@@ -181,11 +188,13 @@ export default {
         if (this.chart) {
           this.zhCN = JSON.parse(this.chart.data.x[0]).zhCN
           this.data = JSON.parse(this.chart.data.x[0]).data
+          // console.log('this.zhCN', this.zhCN)
+          // console.log('this.data', this.data)
           this.$forceUpdate();
         }
       },
       deep: true,
-      immediate:true, // 首次加载的时候执行函数
+      immediate: true, // 首次加载的时候执行函数
     }
   },
 };
@@ -196,6 +205,7 @@ export default {
   height: 100%;
   padding: 10px;
 }
+
 .scroll-container {
   width: 100%;
   max-height: 99%; /* Set a maximum height for the container */
@@ -207,13 +217,6 @@ export default {
   align-items: center;
 }
 
-.group_20 {
-  background-color: rgba(24, 254, 254, 1);
-  border-radius: 3px;
-  width: 26px;
-  height: 26px;
-  margin-top: 33px;
-}
 
 .dot {
   width: 13px;
@@ -231,17 +234,17 @@ export default {
 
 .custom-span {
   font-size: 26px;
-  //color: #FFFFFF;
+  color: #FFFFFF;
 }
 
 .data-row {
   margin-bottom: 10px;
-  width: 100%;
+  //width: 100%;
 }
 
 .back {
-  width: 727px;
-  height: 210px;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(270deg, rgba(24, 254, 254, 0.1) 0%, rgba(24, 254, 254, 0.03) 100%);
   border-radius: 5px 5px 5px 5px;
   opacity: 1;
@@ -259,7 +262,7 @@ export default {
   height: 40px;
   font-size: 25px;
   font-weight: 500;
-  //color: #FFFFFF;
+  color: #FFFFFF;
   line-height: 40px;
 }
 
