@@ -1,0 +1,13 @@
+{
+    "name": "buttonfilter",
+    "free": 0,
+    "store": "thirdpart",
+    "cost": 0,
+    "category": "view",
+    "descript": "buttonfilter",
+    "version": "1.18.14",
+    "creator": "DATAEASE",
+    "moduleName": "view-buttonfilter-backend",
+    "require": "1.10.0",
+    "dsType": ""
+}

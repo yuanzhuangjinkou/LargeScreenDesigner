@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AfaMapViewRSHandler implements PluginViewRSHandler<Map> {
+public class ButtonFilterViewRSHandler implements PluginViewRSHandler<Map> {
 
     // 文本卡类型
 

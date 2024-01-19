@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AfaMapViewStatHandler implements PluginViewStatHandler {
+public class ButtonFilterViewStatHandler implements PluginViewStatHandler {
     @Override
     public String build(PluginViewParam pluginViewParam, ViewPluginService viewPluginService) {
         ViewPluginBaseService baseService = viewPluginService.getBaseService();
