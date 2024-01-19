@@ -3702,6 +3702,9 @@ export default {
           id = field.id;
         }
       });
+
+      // let id = this.chart.data.fields[0].id
+
       const linkageParam = {
         option: 'linkage',
         viewId: this.chart.id,

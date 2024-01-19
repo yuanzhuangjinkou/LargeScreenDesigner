@@ -475,7 +475,6 @@ export default {
   .personnel-trajectory {
     width: 26px;
     height: 26px;
-    background-image: url("../../../assets/切图/运行/巡检页面/Group3776.png");
     background-size: 26px 26px;
   }
 
@@ -490,7 +489,6 @@ export default {
     background-size: 36px;
     background-repeat: no-repeat;
     background-position: left center;
-    background-image: url("../../../assets/切图/生产/组3220.png");
 
     .text {
       //height: 16px;
@@ -504,59 +502,16 @@ export default {
     }
   }
 
-  // 秦华总部
-  //.bg-marker0 {
-  //  width: 236px;
-  //  background-image: url("../../../assets/切图/qh.png");
-  //  background-size: 168px 30px;
-  //
-  //  .text {
-  //    background: transparent;
-  //  }
-  //}
-  //
-  //// 门站
-  //.bg-marker1 {
-  //  background-image: url("../../../assets/切图/生产/组3220.png");
-  //}
-  //
-  //// 高中压调压站
-  //.bg-marker2 {
-  //  background-image: url("../../../assets/切图/生产/组3287.png");
-  //}
-  //
-  //// 热源厂
-  //.bg-marker3 {
-  //  background-image: url("../../../assets/切图/生产/组3289.png");
-  //}
-  //
-  //// 储配厂
-  //.bg-marker4 {
-  //  background-image: url("../../../assets/切图/生产/组3288.png");
-  //}
-  //
-  //// 首页同行公司
-  //.bg-marker5 {
-  //  background-image: url("../../../assets/切图/首页/首页/组3679.png");
-  //}
-
   // 首页分公司
   .bg-marker6 {
-    width: 300px;
-    height: 300px;
-    background-image: url("../../../assets/组3248@2x.png");
-    background-size: contain;
-    background-repeat: no-repeat; // 确保背景图像不重复
-    background-position: center; // 将背景图像居中
+    width: 220px;
+    height: 60px;
+    background-image: url("../../../assets/yuncheng/组3248@2x.png");
+    background-size: 100% 100%;
 
     .text {
-      margin-left: 50px;
+      transform: translate(120%, -40%);
       font-size: 20px;
-      margin-bottom: 25px;
-      //background-color: rgba(0, 0, 0, .36);
-      //border-radius: 2px;
-      //border-left: #01EA84 3px solid;
-      //border-right: #01EA84 3px solid;
     }
   }
 

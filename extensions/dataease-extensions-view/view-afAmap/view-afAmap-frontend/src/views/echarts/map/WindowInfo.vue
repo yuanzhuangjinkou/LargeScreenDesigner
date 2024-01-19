@@ -68,7 +68,7 @@ export default {
   background-image: url('../../../assets/yuncheng/组4032@2x.png');
 }
 .backgroundImg_2 {
-  background-image: url('../../../assets/组4031@2x.png');
+  background-image: url('../../../assets/yuncheng/组4031@2x.png');
 }
 #homeWindowInfo {
   width: 430px;

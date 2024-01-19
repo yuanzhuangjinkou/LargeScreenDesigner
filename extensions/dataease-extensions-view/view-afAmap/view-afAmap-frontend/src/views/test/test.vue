@@ -6,7 +6,7 @@
         <!-- 动态展示数据 -->
         <div class="back">
           <a-row class="custom-row">
-            <img class="custom-img image_21" src="../../assets/组3908@2x.png" alt="">
+            <img class="custom-img image_21" src="../../assets/yuncheng/组3908@2x.png" alt="">
             <span class="custom-span">{{ item.name }}</span>
           </a-row>
 
