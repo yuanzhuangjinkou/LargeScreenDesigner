@@ -1,12 +1,13 @@
 <template>
+<!--  <div style="display: flex;position:relative" class="chart-class">-->
   <div>
-    <view-track-bar
-      ref="viewTrack"
-      :track-menu="trackMenu"
-      class="track-bar"
-      :style="trackBarStyleTime"
-      @trackClick="trackClick"
-    />
+<!--    <view-track-bar-->
+<!--      ref="viewTrack"-->
+<!--      :track-menu="trackMenu"-->
+<!--      class="track-bar"-->
+<!--      :style="trackBarStyleTime"-->
+<!--      @trackClick="trackClick"-->
+<!--    />-->
     <div class="scroll-container">
       <!-- 遍历数据 -->
       <div v-for="(item, index) in data" :key="index" class="data-row">
@@ -18,7 +19,7 @@
           </a-row>
 
           <a-row >
-            <a-col :align="'left'" :span="12" v-for="(value, key, index) in item" :key="key" v-if="key !== 'name'">
+            <a-col align="left" :span="12" v-for="(value, key, index) in item" :key="key" v-if="key !== 'name'">
               <div class="data-column">
                 <!-- 点 -->
                 <div class="dot"></div>
@@ -203,74 +204,73 @@ export default {
 <style lang="scss" scoped>
 .chart-class {
   height: 100%;
+  width: 100%;
   padding: 10px;
 }
 
 .scroll-container {
+  max-height: 99%;
   width: 100%;
-  max-height: 99%; /* Set a maximum height for the container */
-  overflow-y: auto; /* Enable vertical scrollbar when content overflows */
-}
+  overflow-y: auto;
+  //background-color: black;
+  .data-row {
+    margin-bottom: 10px;
 
-.custom-row {
-  display: flex;
-  align-items: center;
-}
+    .back {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(270deg, rgba(24, 254, 254, 0.1) 0%, rgba(24, 254, 254, 0.03) 100%);
+      border-radius: 5px;
+      opacity: 1;
+      border: 2px solid;
+      border-image: linear-gradient(270deg, rgba(24, 254, 254, 0.4), rgba(24, 254, 254, 0)) 2 2;
 
+      .custom-row {
+        display: flex;
+        align-items: center;
 
-.dot {
-  width: 13px;
-  height: 13px;
-  background: #18FEFE;
-  display: inline-block;
-  opacity: 1;
-  margin-right: 5px; /* Optional: Add margin to create space between the dot and text */
-}
+        .custom-img {
+          width: 51px;
+          height: 51px;
+        }
 
-.custom-img {
-  width: 51px;
-  height: 51px;
-}
-
-.custom-span {
-  font-size: 26px;
-  color: #FFFFFF;
-}
-
-.data-row {
-  margin-bottom: 10px;
-  //width: 100%;
-}
-
-.back {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(270deg, rgba(24, 254, 254, 0.1) 0%, rgba(24, 254, 254, 0.03) 100%);
-  border-radius: 5px 5px 5px 5px;
-  opacity: 1;
-  border: 2px solid;
-  border-image: linear-gradient(270deg, rgba(24.000000469386578, 254.00000005960464, 254.00000005960464, 0.4000000059604645), rgba(24.000000469386578, 254.00000005960464, 254.00000005960464, 0)) 2 2;
+        .custom-span {
+          font-size: 26px;
+          color: #FFF;
+        }
+      }
+    }
+  }
 }
 
 .data-column {
   display: inline-block;
   margin-left: 20px;
-}
 
-.custom-key {
-  width: 69px;
-  height: 40px;
-  font-size: 25px;
-  font-weight: 500;
-  color: #FFFFFF;
-  line-height: 40px;
-}
+  .dot {
+    width: 13px;
+    height: 13px;
+    background: #18FEFE;
+    display: inline-block;
+    opacity: 1;
+    margin-right: 5px;
+  }
 
-.custom-value {
-  width: 34px;
-  height: 30px;
-  font-size: 25px;
-  font-weight: 400;
-  color: #18FEFE;
+  .custom-key {
+    width: 69px;
+    height: 40px;
+    font-size: 25px;
+    font-weight: 500;
+    color: #FFF;
+    line-height: 40px;
+  }
+
+  .custom-value {
+    width: 34px;
+    height: 30px;
+    font-size: 25px;
+    font-weight: 400;
+    color: #18FEFE;
+  }
 }
 </style>
