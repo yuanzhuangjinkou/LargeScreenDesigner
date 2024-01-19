@@ -10,7 +10,12 @@ import draggable from 'vuedraggable'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import '@/icons' // icon
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
+
+
 Vue.config.productionTip = false
+Vue.use(Antd)
 Vue.use(ElementUI, {
   size: Cookies.get('size') || 'medium',
   i18n: (key, value) => i18n.t(key, value)

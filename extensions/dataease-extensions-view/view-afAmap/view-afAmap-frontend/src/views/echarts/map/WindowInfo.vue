@@ -1,19 +1,17 @@
 <template>
-  <div id="homeWindowInfo">
-    <div class="title">{{ info.branchName }}</div>
-    <div class="content">
-      <div class="item">
-        <div class="dot"></div>
-        <div class="text">检测时间: </div>
-        <div class="number">{{ info.f_input_date }}</div>
-      </div>
+  <div id="homeWindowInfo" class="backgroundImg">
 
-      <div class="item">
-        <div class="dot"></div>
-        <div class="text">检测指标: </div>
-        <div class="number">{{ info.f_low_pressure }}</div>
-      </div>
+    <div class="test">
+      <h1 class="title">场站</h1>
+      <span class="span-test">检测时间: {{ currentDateTime }}</span>
+      <br>
+      <span class="span-test">检测指标: {{  }} </span>
+      <br>
+      <span class="span-test">检测指标: {{ }}</span>
+      <br>
+      <span class="span-test">检测指标: {{ }}</span>
     </div>
+
   </div>
 </template>
 
@@ -25,63 +23,73 @@ export default {
   },
   components: {},
   data() {
-    return {}
+    return {
+      currentDateTime: '',
+    }
   },
   computed: {},
   watch: {
     info: {
       handler(newVal) {
+        console.log('>>> WindowsInfo --> ', newVal)
       },
-      deep: true
+      // deep: true
     }
   },
-  methods: {},
-  mounted() {},
+  methods: {
+    updateDateTime() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, '0');
+      const day = now.getDate().toString().padStart(2, '0');
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+
+      this.currentDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+  },
+  mounted() {
+    this.updateDateTime();
+  },
 }
 </script>
 
 <style lang="scss">
+.backgroundImg {
+  background-image: url('../../../assets/组4031@2x.png');
+}
 #homeWindowInfo {
-  width: 260px;
-  height: 126px;
-  background-color: rgba(0, 0, 0, .7);
-  border-left: #01EA84 5px solid;
-  border-right: #01EA84 5px solid;
-  border-radius: 3px;
-  font-family: medium;
+  width: 430px;
+  height: 300px;
+
+  background-size: contain;
+  background-repeat: no-repeat; // 确保背景图像不重复
+  background-position: center; // 将背景图像居中
   color: #FFFFFF;
+  margin-bottom: -10px;
 
-  .title {
-    font-size: 16px;
-    text-align: center;
-    margin-bottom: 6px;
-    margin-left: 0px
-  }
+  .test {
+    padding-top: 6px;
 
-  .content {
-    .item {
-      font-size: 16px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      position: relative;
-      margin: 6px 0;
+    .title {
+      font-size: 30px;
+      color: #FFFFFF;
+      margin-top: 30px;
+      margin-left: 30px;
+    }
 
-      .dot {
-        width: 10px;
-        height: 10px;
-        margin: 0 6px;
-        background-color: #01EA84;
-      }
-
-      .number {
-        width: 60px;
-        font-family: ysbth;
-        color: #01EA84;
-        position: absolute;
-        right: 60px;
-      }
+    .span-test {
+      //width: 521px;
+      //height: 9px;
+      font-size: 28px;
+      //font-weight: 400;
+      color: #FFFFFF;
+      margin-left: 30px;
+      //line-height: 8px;
     }
   }
+
+
 }
 </style>

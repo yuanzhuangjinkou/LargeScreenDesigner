@@ -1,8 +1,9 @@
 <template>
-  <div id="left-of-top">
+  <div id="left-of-top" style="display: flex;position:relative" class="chart-class">
     <!-- 地图 -->
     <div class="mapbox">
-      <div class="map-mask"/>
+      <div class="blur-left blur"/>
+      <div class="blur-right blur"/>
       <BMap class="map"
             :show-pipe-layer="showPipeLayer"
             :marker-list="markerList"
@@ -14,27 +15,28 @@
             :other-company-boarder="otherCompanyBoarder"
       />
       <!-- 将按钮放在地图上面，z-index 设置为较大的值 -->
-      <div
-        style="position: absolute; top: 100px; left: 100px; background-color: pink; width: 100px; height: 50px; z-index: 100;">
-        <select v-model="selectedOption" @change="handleSelectionChange">
-          <option value="" disabled selected>请选择</option>
-          <option value="营业厅">营业厅</option>
-          <option value="气源点">气源点</option>
-          <option value="分输站">分输站</option>
-        </select>
-      </div>
+<!--      <div-->
+<!--        style="position: absolute; top: 100px; left: 100px; background-color: pink; width: 100px; height: 50px; z-index: 100;">-->
+<!--        <select v-model="selectedOption" @change="handleSelectionChange">-->
+<!--          <option value="" disabled selected>请选择</option>-->
+<!--          <option value="营业厅">营业厅</option>-->
+<!--          <option value="气源点">气源点</option>-->
+<!--          <option value="分输站">分输站</option>-->
+<!--        </select>-->
+<!--      </div>-->
     </div>
 
     <!-- 弹窗 -->
     <window-info :info="infoWindow.info"></window-info>
 
   </div>
+
 </template>
 
 <script>
 import {
   uuid
-} from '../../../..//utils/map'
+} from '../../../../utils/map'
 import BMap from '../BMap';
 import WindowInfo from "../WindowInfo.vue";
 import ViewTrackBar from '../../../../components/views/ViewTrackBar'
@@ -53,15 +55,15 @@ export default {
       showPipeLayer: [],
       // 分公司范围中心和同行公司标记点
       markerList: [
-        {position: [108.899303, 34.24334], type: 0, title: '西安秦华燃气集团有限公司', text: '', isShow: true},
-        {position: [108.71, 34.35], type: 5, title: '陕西城燃', text: '陕西城燃', isShow: true},
-        {position: [108.774094, 34.244433], type: 5, title: '丰源', text: '丰源', isShow: true},
-        {position: [109.266091, 34.420246], type: 5, title: '华润', text: '华润', isShow: true},
-        {position: [109.159087, 34.304597], type: 5, title: '西蓝', text: '西蓝', isShow: true},
-        {position: [108.926326, 34.123063], type: 5, title: '长安', text: '长安', isShow: true},
-        {position: [109.10, 34.49], type: 5, title: '通源', text: '通源', isShow: true},
-        {position: [108.64, 34.08], type: 5, title: '西户', text: '西户', isShow: true},
-        {position: [109.03, 34.49], type: 5, title: '陕西玉祥', text: '陕西玉祥', isShow: true},
+        // {position: [108.899303, 34.24334], type: 0, title: '西安秦华燃气集团有限公司', text: '', isShow: true},
+        // {position: [108.71, 34.35], type: 5, title: '陕西城燃', text: '陕西城燃', isShow: true},
+        // {position: [108.774094, 34.244433], type: 5, title: '丰源', text: '丰源', isShow: true},
+        // {position: [109.266091, 34.420246], type: 5, title: '华润', text: '华润', isShow: true},
+        // {position: [109.159087, 34.304597], type: 5, title: '西蓝', text: '西蓝', isShow: true},
+        // {position: [108.926326, 34.123063], type: 5, title: '长安', text: '长安', isShow: true},
+        // {position: [109.10, 34.49], type: 5, title: '通源', text: '通源', isShow: true},
+        // {position: [108.64, 34.08], type: 5, title: '西户', text: '西户', isShow: true},
+        // {position: [109.03, 34.49], type: 5, title: '陕西玉祥', text: '陕西玉祥', isShow: true},
         // TODO 计算范围中心点函数不显示弹窗，暂时用标记点代替
         {position: [108.82, 34.27], type: 6, title: '场站', text: '场站', isShow: true},
         {position: [108.98, 34.38], type: 6, title: '调压箱', text: '调压箱', isShow: true},
@@ -3735,56 +3737,44 @@ export default {
     },
 
   },
-  async mounted() {
-    var map = this.$refs.bmap.map;
-    console.log('map', map)
-    // map.setPitch(60);
-    map.setZoom(11.0);
-    map.setCenter(this.center);
-    // this.map.setMapStyle("amap://styles/dfb4b8d0a013071e535e04f4eaf96ce4");
-    this.elasticMarker = [];
-    this.starPush();
-    // this.fszPush()
-
-    this.showPipe = ["HP"];
+  mounted() {
   },
   // 启动项目需要注释 props, computed
-  props: {
-    obj: {
-      type: Object,
-      required: true
-    }
-  },
-  computed: {
-    trackBarStyleTime() {
-      return this.trackBarStyle
-    },
-    active() {
-      return this.obj.active
-    },
-    chart() {
-      return this.obj.chart
-    },
-    filter() {
-      return this.obj.filter || {}
-    },
-    trackMenu() {
-      console.log('trackMenu_', this.obj.trackMenu)
-      return this.obj.trackMenu || ['drill']
-    },
-    searchCount() {
-      return this.obj.searchCount || 0
-    },
-    terminalType() {
-      return this.obj.terminalType || 'pc'
-    }
-
-  },
+  // props: {
+  //   obj: {
+  //     type: Object,
+  //     required: true
+  //   }
+  // },
+  // computed: {
+  //   trackBarStyleTime() {
+  //     return this.trackBarStyle
+  //   },
+  //   active() {
+  //     return this.obj.active
+  //   },
+  //   chart() {
+  //     return this.obj.chart
+  //   },
+  //   filter() {
+  //     return this.obj.filter || {}
+  //   },
+  //   trackMenu() {
+  //     console.log('trackMenu_', this.obj.trackMenu)
+  //     return this.obj.trackMenu || ['drill']
+  //   },
+  //   searchCount() {
+  //     return this.obj.searchCount || 0
+  //   },
+  //   terminalType() {
+  //     return this.obj.terminalType || 'pc'
+  //   }
+  //
+  // },
   watch: {
     active: {
       handler(newVal, oldVla) {
         console.log('this.active', JSON.stringify(this.active))
-        this.scrollStatusChange(newVal)
       }
     },
     chart: {
@@ -3803,15 +3793,15 @@ export default {
 
 <style lang="scss" scoped>
 #left-of-top {
-  width: 3700px;
-  height: 2023px;
+  width: 1920px;
+  height: 1080px;
   overflow: hidden;
   // margin-left: -68px;
 
   .mapbox {
     .map-mask {
-      height: 4000px;
-      width: 1000px;
+      //height: 4000px;
+      //width: 1000px;
       left: 56%;
       top: -20%;
       position: absolute;
@@ -3819,11 +3809,26 @@ export default {
       filter: blur(200px);
       background-color: rgb(4, 20, 25);
     }
-
     .map {
       z-index: 1;
     }
   }
+}
+.blur {
+  width: 20%;
+  height: 100%;
+  z-index: 2;
+  position: absolute;
+  //left: 0%;
+  //top: 0%;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 254, 254, 0);
+}
+
+.blur-left {
+}
+.blur-right {
+  right: 0;
 }
 
 </style>

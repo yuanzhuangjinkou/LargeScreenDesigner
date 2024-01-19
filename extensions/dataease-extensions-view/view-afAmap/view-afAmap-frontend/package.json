@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@riophae/vue-treeselect": "0.4.0",
+    "ant-design-vue": "^1.7.8",
     "flatted": "^3.2.9",
     "vue": "^2.5.2",
     "vue-i18n": "7.3.2",
@@ -32,7 +33,7 @@
     "chalk": "^2.0.1",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^0.28.0",
-    "element-ui": "2.15.7",
+    "element-ui": "2.15.14",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
