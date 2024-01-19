@@ -25,6 +25,7 @@
     "src/**/*.vue": "eslint --ext .vue"
   },
   "dependencies": {
+    "ant-design-vue": "^1.7.8",
     "@antv/g2plot": "^2.4.9",
     "@antv/l7": "2.15.0",
     "@antv/l7-component": "2.15.0",
