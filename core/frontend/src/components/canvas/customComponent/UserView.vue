@@ -770,6 +770,7 @@ export default {
       param.viewId && param.viewId === this.element.propValue.viewId && this.jumpClick(param)
     },
     pluginAddViewTrackFilter(param) {
+      console.log('插件联动触发param', param)
       param.viewId && param.viewId === this.element.propValue.viewId && this.addViewTrackFilter(param)
     },
     viewInCache(param) {

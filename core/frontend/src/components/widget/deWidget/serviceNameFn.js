@@ -43,6 +43,7 @@ function textSelectTreeWidget(nodeCache, style) {
 }
 
 function textSelectWidget(nodeCache, style) {
+  console.log(">>>> textSelectWidget")
   const elTag = nodeCache.querySelectorAll('.el-tag.el-tag--info')
   if (elTag.length) {
     elTag.forEach(item => {

@@ -609,6 +609,7 @@ const data = {
       })
     },
     setDragComponentInfo(state, dragComponentInfo) {
+      console.log('>>>> setDragComponentInfo_', state, dragComponentInfo)
       dragComponentInfo['shadowStyle'] = {
         x: 0,
         y: 0,

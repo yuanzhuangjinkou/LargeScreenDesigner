@@ -27,6 +27,7 @@ import RemarkEditor from '@/views/chart/components/componentStyle/dialog/RemarkE
 import TitleRemark from '@/views/chart/view/TitleRemark'
 import '@/components/canvas/customComponent' // 注册自定义组件
 import deBtn from '@/components/deCustomCm/DeBtn.vue'
+import 'ant-design-vue/dist/antd.css'
 
 import '@/utils/DateUtil'
 import draggable from 'vuedraggable'
@@ -34,6 +35,7 @@ import deWebsocket from '@/websocket'
 import { GaodeMap } from '@antv/l7-maps'
 import * as echarts from 'echarts'
 import UmyUi from 'umy-ui'
+import Antd from 'ant-design-vue'
 // 全屏插件
 import fullscreen from 'vue-fullscreen'
 import VueFriendlyIframe from 'vue-friendly-iframe'
@@ -81,6 +83,7 @@ if (process.env.NODE_ENV === 'production') {
 //   mockXHR()
 }
 
+Vue.use(Antd)
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明

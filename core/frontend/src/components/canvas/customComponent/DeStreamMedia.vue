@@ -7,6 +7,7 @@
       v-if="element.streamMediaLinks[element.streamMediaLinks.videoType].url"
       class="video-container"
     >
+<!--      流媒体-->
       <video
         :ref="'player-'+element.id"
         class="centered-video"
@@ -116,6 +117,8 @@ export default {
   },
   methods: {
     streamMediaLinksChange() {
+      console.log('streamMediaLinksChange_')
+      debugger
       this.pOption = this.element.streamMediaLinks[this.element.streamMediaLinks.videoType]
       this.flvPlayer = null
       this.videoShow = false

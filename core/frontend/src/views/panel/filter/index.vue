@@ -59,7 +59,7 @@ export default {
 
         ],
         '文本过滤组件': [
-          'textSelectWidget',
+          'textSelectWidget', // 文本下拉
           'textSelectGridWidget',
           'textInputWidget',
           'textSelectTreeWidget'
@@ -123,6 +123,7 @@ export default {
       }
     },
     handleDragStart(ev) {
+      console.log('>>>> 过滤组件 拖拽')
       // 记录拖拽信息
       const dragComponentInfo = deepCopy(ApplicationContext.getService(ev.target.dataset.id).getDrawPanel())
       // 设置矩阵标记点
@@ -144,6 +145,7 @@ export default {
       eventBus.$emit('startMoveIn')
     },
     handleDragEnd(ev) {
+      console.log('>>>> 过滤组件拖拽结束')
       this.$store.commit('clearDragComponentInfo')
     }
   }

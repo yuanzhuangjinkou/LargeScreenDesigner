@@ -4,6 +4,7 @@
       v-if="element.videoLinks[element.videoLinks.videoType].sources[0].src"
       class="player"
     >
+<!--     视频-->
       <video-player
         v-if="showVideo"
         ref="videoPlayer"

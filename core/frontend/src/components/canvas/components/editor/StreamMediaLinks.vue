@@ -113,6 +113,7 @@ export default {
       this.streamMediaInfoTemp = deepCopy(this.linkInfo)
     },
     onSubmit() {
+      console.log('>>>> 确定')
       this.streamMediaInfoTemp[this.streamMediaInfoTemp.videoType].url = checkAddHttp(this.streamMediaInfoTemp[this.streamMediaInfoTemp.videoType].url)
       if (this.attrPosition === 'panel') {
         this.curComponent.streamMediaLinks = this.streamMediaInfoTemp

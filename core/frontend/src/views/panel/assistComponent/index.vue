@@ -118,7 +118,10 @@ export default {
   },
 
   methods: {
+
     handleDragStart(ev) {
+      // 其他组件拖动
+      console.log('>>>> 拖动开始?', typeof ev, ev)
       this.$store.commit('setDragComponentInfo', this.componentInfo(ev.target.dataset.id))
       ev.dataTransfer.effectAllowed = 'copy'
       const dataTrans = {
@@ -133,6 +136,7 @@ export default {
       this.$refs.files.click()
     },
     handleFileChange(e) {
+      console.log('123456789')
       const file = e.target.files[0]
       if (!file.type.includes('image')) {
         toast('只能插入图片')
@@ -175,6 +179,7 @@ export default {
       reader.readAsDataURL(file)
     },
     componentInfo(id) {
+      console.log(">>>> 辅助设计组件?")
       // 辅助设计组件
       let component
       componentList.forEach(componentTemp => {
@@ -194,6 +199,7 @@ export default {
       return component
     },
     handleDragEnd(ev) {
+      console.log('>>>> 拖动结束?')
       this.$store.commit('clearDragComponentInfo')
     }
   }
