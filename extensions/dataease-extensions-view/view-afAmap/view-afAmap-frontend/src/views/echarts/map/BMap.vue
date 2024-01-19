@@ -83,9 +83,9 @@ export default {
     initMap() {
       this.map = new AMap.Map('mymap', {
         zooms: [11, 20],
-        zoom: 11,
+        zoom: 13,
         showBuildingBlock: false,
-        center: [109.001, 34.286],
+        center: [111.01, 35.03],
         // mapStyle: 'amap://styles/dfb4b8d0a013071e535e04f4eaf96ce4',
         mapStyle: 'amap://styles/3356249ed35bc7ebc6c673c57461fc86',
         showLabel: true,

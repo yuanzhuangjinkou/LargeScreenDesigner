@@ -1,15 +1,15 @@
 <template>
-  <div id="homeWindowInfo" class="backgroundImg">
+  <div id="homeWindowInfo" :class="backgroundImg">
 
     <div class="test">
-      <h1 class="title">场站</h1>
+      <h1 class="title">{{ this.info.name }}</h1>
       <span class="span-test">检测时间: {{ currentDateTime }}</span>
       <br>
       <span class="span-test">检测指标: {{  }} </span>
       <br>
-      <span class="span-test">检测指标: {{ }}</span>
+      <span class="span-test">检测指标: {{  }}</span>
       <br>
-      <span class="span-test">检测指标: {{ }}</span>
+      <span class="span-test">检测指标: {{  }}</span>
     </div>
 
   </div>
@@ -25,15 +25,23 @@ export default {
   data() {
     return {
       currentDateTime: '',
+      backgroundImg: 'backgroundImg_1'
     }
   },
   computed: {},
   watch: {
     info: {
       handler(newVal) {
-        console.log('>>> WindowsInfo --> ', newVal)
+        let n = Math.floor(Math.random() * 2 + 1)
+        console.log('>>> WindowsInfo --> ', newVal, n)
+        if(newVal.name === '场站')
+          this.backgroundImg = 'backgroundImg_1'
+        else if(newVal.name === '调压箱')
+          this.backgroundImg = 'backgroundImg_2'
+        else
+          this.backgroundImg = 'backgroundImg_' + n;
       },
-      // deep: true
+      deep: true
     }
   },
   methods: {
@@ -56,7 +64,10 @@ export default {
 </script>
 
 <style lang="scss">
-.backgroundImg {
+.backgroundImg_1 {
+  background-image: url('../../../assets/yuncheng/组4032@2x.png');
+}
+.backgroundImg_2 {
   background-image: url('../../../assets/组4031@2x.png');
 }
 #homeWindowInfo {

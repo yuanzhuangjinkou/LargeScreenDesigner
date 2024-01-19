@@ -15,15 +15,15 @@
             :other-company-boarder="otherCompanyBoarder"
       />
       <!-- 将按钮放在地图上面，z-index 设置为较大的值 -->
-<!--      <div-->
-<!--        style="position: absolute; top: 100px; left: 100px; background-color: pink; width: 100px; height: 50px; z-index: 100;">-->
-<!--        <select v-model="selectedOption" @change="handleSelectionChange">-->
-<!--          <option value="" disabled selected>请选择</option>-->
-<!--          <option value="营业厅">营业厅</option>-->
-<!--          <option value="气源点">气源点</option>-->
-<!--          <option value="分输站">分输站</option>-->
-<!--        </select>-->
-<!--      </div>-->
+      <!--      <div-->
+      <!--        style="position: absolute; top: 100px; left: 100px; background-color: pink; width: 100px; height: 50px; z-index: 100;">-->
+      <!--        <select v-model="selectedOption" @change="handleSelectionChange">-->
+      <!--          <option value="" disabled selected>请选择</option>-->
+      <!--          <option value="营业厅">营业厅</option>-->
+      <!--          <option value="气源点">气源点</option>-->
+      <!--          <option value="分输站">分输站</option>-->
+      <!--        </select>-->
+      <!--      </div>-->
     </div>
 
     <!-- 弹窗 -->
@@ -65,10 +65,10 @@ export default {
         // {position: [108.64, 34.08], type: 5, title: '西户', text: '西户', isShow: true},
         // {position: [109.03, 34.49], type: 5, title: '陕西玉祥', text: '陕西玉祥', isShow: true},
         // TODO 计算范围中心点函数不显示弹窗，暂时用标记点代替
-        {position: [108.82, 34.27], type: 6, title: '场站', text: '场站', isShow: true},
-        {position: [108.98, 34.38], type: 6, title: '调压箱', text: '调压箱', isShow: true},
-        {position: [109.08, 34.23], type: 6, title: '分输站', text: '分输站', isShow: true},
-        {position: [108.94, 34.22], type: 6, title: '营业厅', text: '营业厅', isShow: true},
+        {position: [110.97,35.05], type: 6, title: '场站', text: '场站', isShow: true},
+        {position: [111.04,35.06], type: 6, title: '调压箱', text: '调压箱', isShow: true},
+        {position: [110.98,35.07], type: 6, title: '分输站', text: '分输站', isShow: true},
+        {position: [111.02,35.03], type: 6, title: '营业厅', text: '营业厅', isShow: true},
       ],
       // 秦华分公司边界
       companyBoarder: [
@@ -3612,7 +3612,7 @@ export default {
       elasticMarker: [],
       polylinePath: [],
       showPipe: ['HP'],
-      center: [108.63, 34.46],
+      center: [111.01, 35.03],
       mapZoom: 11.21,
 
       myChart: {},
@@ -3627,35 +3627,31 @@ export default {
       let name = e.target.De.title
       console.log('markerClick_', '点击: ' + name)
       // if(name.includes('分公司')) {
-        // 请求数据
-        const params = {
-          tableName: 'T_CUSTOMER_DATA_STATISTICS',
-          condition: `F_DEPNAME = '${name}'`
-        }
-        console.log('markerClick_', name)
-        let res = '[{"f_medium_pressure":938.64,"f_registrant":null,"f_business":3427,"f_low_pressure":1361.16,"f_high_pressure":null,"f_input_date":"2023-06-20 15:08:40","id":4,"f_depname":"A 场站","f_resident":870208}]';
-        res = JSON.parse(res)
-          this.infoWindow.info.branchName = name;
-          this.infoWindow.info.residentsCount = res[0].f_resident;
-          this.infoWindow.info.nonResidentCount = res[0].f_business;
-          this.infoWindow.info.pipelineLength = res[0].f_high_pressure + res[0].f_medium_pressure + res[0].f_low_pressure;
+      // 请求数据
+      const params = {
+        tableName: 'T_CUSTOMER_DATA_STATISTICS',
+        condition: `F_DEPNAME = '${name}'`
+      }
+      console.log('markerClick_', name)
 
-        // 遍历标记点隐藏被点击的
-        this.markerList.forEach(item => item.isShow = item.title !== name)
+      this.infoWindow.info = {'name': name};
 
-        // 打开弹窗
-        this.infoWindow.window.setContent(
-          document.getElementById("homeWindowInfo")
-        );
-        this.infoWindow.window.open(
-          e.target.getMap(),
-          e.target.getPosition()
-        );
-        e.target.getMap().setCenter(e.lnglat.offset(0, 0))
+      // 遍历标记点隐藏被点击的
+      this.markerList.forEach(item => item.isShow = item.title !== name)
+
+      // 打开弹窗
+      this.infoWindow.window.setContent(
+        document.getElementById("homeWindowInfo")
+      );
+      this.infoWindow.window.open(
+        e.target.getMap(),
+        e.target.getPosition()
+      );
+      e.target.getMap().setCenter(e.lnglat.offset(0, 0))
       // }
     },
     // 地图点击事件
-    windowClose () {
+    windowClose() {
       console.log('>>>> 地图点击')
       // 遍历标记点显示被隐藏的
       this.markerList.forEach(item => item.isShow = true)
@@ -3740,37 +3736,37 @@ export default {
   mounted() {
   },
   // 启动项目需要注释 props, computed
-  // props: {
-  //   obj: {
-  //     type: Object,
-  //     required: true
-  //   }
-  // },
-  // computed: {
-  //   trackBarStyleTime() {
-  //     return this.trackBarStyle
-  //   },
-  //   active() {
-  //     return this.obj.active
-  //   },
-  //   chart() {
-  //     return this.obj.chart
-  //   },
-  //   filter() {
-  //     return this.obj.filter || {}
-  //   },
-  //   trackMenu() {
-  //     console.log('trackMenu_', this.obj.trackMenu)
-  //     return this.obj.trackMenu || ['drill']
-  //   },
-  //   searchCount() {
-  //     return this.obj.searchCount || 0
-  //   },
-  //   terminalType() {
-  //     return this.obj.terminalType || 'pc'
-  //   }
-  //
-  // },
+  props: {
+    obj: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    trackBarStyleTime() {
+      return this.trackBarStyle
+    },
+    active() {
+      return this.obj.active
+    },
+    chart() {
+      return this.obj.chart
+    },
+    filter() {
+      return this.obj.filter || {}
+    },
+    trackMenu() {
+      console.log('trackMenu_', this.obj.trackMenu)
+      return this.obj.trackMenu || ['drill']
+    },
+    searchCount() {
+      return this.obj.searchCount || 0
+    },
+    terminalType() {
+      return this.obj.terminalType || 'pc'
+    }
+
+  },
   watch: {
     active: {
       handler(newVal, oldVla) {
@@ -3779,7 +3775,7 @@ export default {
     },
     chart: {
       handler(newVal, oldVal) {
-        console.log('this.chart', JSON.stringify(this.chart))
+        console.log('afamap_this.chart', JSON.stringify(this.chart))
         if (this.chart) {
           const val = this.chart.data.x;
           // this.stationClick(val)
@@ -3809,11 +3805,13 @@ export default {
       filter: blur(200px);
       background-color: rgb(4, 20, 25);
     }
+
     .map {
       z-index: 1;
     }
   }
 }
+
 .blur {
   width: 20%;
   height: 100%;
@@ -3827,6 +3825,7 @@ export default {
 
 .blur-left {
 }
+
 .blur-right {
   right: 0;
 }
