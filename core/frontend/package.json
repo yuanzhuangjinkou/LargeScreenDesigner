@@ -25,7 +25,6 @@
     "src/**/*.vue": "eslint --ext .vue"
   },
   "dependencies": {
-    "ant-design-vue": "^1.7.8",
     "@antv/g2plot": "^2.4.9",
     "@antv/l7": "2.15.0",
     "@antv/l7-component": "2.15.0",
@@ -40,6 +39,7 @@
     "@antv/util": "^2.0.17",
     "@riophae/vue-treeselect": "0.4.0",
     "@tinymce/tinymce-vue": "^3.2.8",
+    "ant-design-vue": "^1.7.8",
     "axios": "^1.6.1",
     "core-js": "^2.6.5",
     "echarts": "^5.0.1",

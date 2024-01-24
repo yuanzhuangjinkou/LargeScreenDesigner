@@ -199,6 +199,7 @@ export default {
         this.valid = valid
         this.form.enablePwd = enablePwd
         this.form.uri = uri ? (this.origin + uri) : uri
+        console.log('this.form.uri', this.form.uri)
         // 返回的密码是共钥加密后的 所以展示需要私钥解密一波
         pwd && (this.form.pwd = pwd)
 
@@ -269,16 +270,17 @@ export default {
       })
     },
     requestShort() {
-      const url = this.form.uri
-      if (!url) return
-
-      shortUrl({
-        resourceId: this.resourceId
-      }).then(res => {
-        if (res.success) {
-          this.form.uri = this.origin + res.data
-        }
-      })
+      this.form.uri = this.form.uri
+      // const url = this.form.uri
+      // if (!url) return
+      //
+      // shortUrl({
+      //   resourceId: this.resourceId
+      // }).then(res => {
+      //   if (res.success) {
+      //     this.form.uri = this.origin + res.data
+      //   }
+      // })
     },
 
     limitDate(type) {
