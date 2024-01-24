@@ -1,36 +1,44 @@
 <template>
-<!--  <div style="display: flex;position:relative" class="chart-class">-->
+  <!--  <div style="display: flex;position:relative" class="chart-class">-->
   <div>
-<!--    <view-track-bar-->
-<!--      ref="viewTrack"-->
-<!--      :track-menu="trackMenu"-->
-<!--      class="track-bar"-->
-<!--      :style="trackBarStyleTime"-->
-<!--      @trackClick="trackClick"-->
-<!--    />-->
+    <!--    <view-track-bar-->
+    <!--      ref="viewTrack"-->
+    <!--      :track-menu="trackMenu"-->
+    <!--      class="track-bar"-->
+    <!--      :style="trackBarStyleTime"-->
+    <!--      @trackClick="trackClick"-->
+    <!--    />-->
     <div class="scroll-container">
       <!-- 遍历数据 -->
       <div v-for="(item, index) in data" :key="index" class="data-row">
         <!-- 动态展示数据 -->
         <div class="back">
           <a-row class="custom-row">
-            <img class="custom-img" src="../../../assets/yuncheng/组3908@2x.png" alt="">
-            <span class="custom-span">{{ item.name }}</span>
+            <img class="custom-title-img" :style="titleImg" src="../../../assets/yuncheng/组3908@2x.png" alt="">
+            <span :style="titleStyle">{{ item.name }}</span>
           </a-row>
 
-          <a-row >
-            <a-col align="left" :span="12" v-for="(value, key, index) in item" :key="key" v-if="key !== 'name'">
-              <div class="data-column">
+          <a-row>
+            <a-col align="left" :span="12" v-for="(value, key, index) in item" :key="key" v-if="key !== 'name'" style="margin-bottom: 10px">
+              <div class="data-column" v-if="orientation === '1'">
                 <!-- 点 -->
-                <div class="dot"></div>
-                <span class="custom-key">{{ zhCN[key] }}</span>
-                <span class="custom-value">{{ value }}</span>
-                <!-- 温度 -->
-                <span v-if="zhCN[key].includes('温度')" class="custom-value"> (℃) </span>
-                <!-- 流量 -->
-                <span v-if="zhCN[key].includes('流量')" class="custom-value"> (m³/h) </span>
-                <!-- 压力 -->
-                <span v-if="zhCN[key].includes('压力')" class="custom-value"> (mpa) </span>
+                  <span class="dot" :style="dot"></span>
+                  <span class="custom-key" :style="customKey">{{ zhCN[key] }} &nbsp &nbsp</span>
+                  <span class="custom-value" :style="customValue">{{ value }}</span>
+                  <!-- Unit -->
+                  <span v-if="showUnit(zhCN[key])" class="custom-unit" :style="customUnit">{{ getUnit(zhCN[key]) }}</span>
+              </div>
+              <div class="data-column" v-if="orientation === '2'">
+                <!-- 点 -->
+                <div>
+                  <span class="dot" :style="dot"></span>
+                  <span class="custom-key" :style="customKey">{{ zhCN[key] }} &nbsp &nbsp</span>
+                </div>
+                <div>
+                  <span class="custom-value" :style="customValue">{{ value }}</span>
+                  <!-- Unit -->
+                  <span v-if="showUnit(zhCN[key])" class="custom-unit" :style="customUnit">{{ getUnit(zhCN[key]) }}</span>
+                </div>
               </div>
             </a-col>
           </a-row>
@@ -102,10 +110,18 @@ export default {
           T4: 4,
         },
       ],
-      size: '40px'
     };
   },
   methods: {
+    showUnit(key) {
+      return key.includes('温度') || key.includes('流量') || key.includes('压力');
+    },
+    getUnit(key) {
+      if (key.includes('温度')) return '(℃)';
+      if (key.includes('流量')) return '(m³/h)';
+      if (key.includes('压力')) return '(mpa)';
+      return '';
+    },
     trackClick(trackAction) {
       console.log('trackClick_', trackAction)
 
@@ -173,8 +189,54 @@ export default {
     },
     terminalType() {
       return this.obj.terminalType || 'pc'
-    }
+    },
 
+    // 样式计算
+    titleStyle() {
+      console.log('计算属性: ', this.chart)
+      console.log('计算属性: ', JSON.parse(this.chart.customAttr))
+      return {
+        color: JSON.parse(this.chart.customAttr).titleColor,
+        fontSize: JSON.parse(this.chart.customAttr).titleFontSize,
+      }
+    },
+    titleImg() {
+      return {
+        width: JSON.parse(this.chart.customAttr).titleImgSize,
+        height: JSON.parse(this.chart.customAttr).titleImgSize
+      }
+    },
+    dot() {
+      return {
+        width: JSON.parse(this.chart.customAttr).botFontSIze,
+        height: JSON.parse(this.chart.customAttr).botFontSIze,
+        background: JSON.parse(this.chart.customAttr).botColor,
+      }
+    },
+    customKey() {
+      return {
+        fontSize: JSON.parse(this.chart.customAttr).customKeyFontSize,
+        fontWeight: JSON.parse(this.chart.customAttr).customKeyFontWeight,
+        color: JSON.parse(this.chart.customAttr).customKeyColor,
+      }
+    },
+    customValue() {
+      return {
+        fontSize: JSON.parse(this.chart.customAttr).customValueFontSize,
+        fontWeight: JSON.parse(this.chart.customAttr).customValueFontWeight,
+        color: JSON.parse(this.chart.customAttr).customValueColor,
+      }
+    },
+    customUnit() {
+      return {
+        fontSize: JSON.parse(this.chart.customAttr).customUnitFontSize,
+        fontWeight: JSON.parse(this.chart.customAttr).customUnitFontWeight,
+        color: JSON.parse(this.chart.customAttr).customUnitColor,
+      }
+    },
+    orientation() {
+      return JSON.parse(this.chart.customAttr).orientation
+    }
   },
   watch: {
     active: {
@@ -184,13 +246,10 @@ export default {
     },
     chart: {
       handler(newVal, oldVal) {
-        console.log('this.obj', JSON.stringify(this.obj))
         console.log('dynamicDataTable_this.chart', JSON.stringify(this.chart))
         if (this.chart) {
           this.zhCN = JSON.parse(this.chart.data.x[0]).zhCN
           this.data = JSON.parse(this.chart.data.x[0]).data
-          // console.log('this.zhCN', this.zhCN)
-          // console.log('this.data', this.data)
           this.$forceUpdate();
         }
       },
@@ -208,11 +267,32 @@ export default {
   padding: 10px;
 }
 
+.custom-col {
+  display: inline-block;
+  margin-left: 0; /* 尝试将这个值设置为0 */
+}
+
 .scroll-container {
+  //--title-font-size: 30px;
+  //--title-color: #FFF;
+  //--title-img-size: 50px;
+  //
+  //
+  //--bot-font-size: 13px;
+  //--bot-color: #18FEFE;
+  //
+  //--custom-key-font-size: 25px;
+  //--custom-key-font-weight: 800;
+  //--custom-key-color: #FFF;
+  //
+  //--custom-value-font-size: 25px;
+  //--custom-value-font-weight: 800;
+  //--custom-value-color: #18FEFE;
+
   max-height: 99%;
   width: 100%;
   overflow-y: auto;
-  //background-color: black;
+
   .data-row {
     margin-bottom: 10px;
 
@@ -229,48 +309,50 @@ export default {
         display: flex;
         align-items: center;
 
-        .custom-img {
-          width: 51px;
-          height: 51px;
+        .custom-title-img {
+          //width: var(--title-img-size);
+          //height: var(----title-img-size);
         }
 
-        .custom-span {
-          font-size: 26px;
-          color: #FFF;
+        .custom-title-span {
+          //font-size: var(--title-font-size);
+          color: var(--title-color);
+        }
+
+      }
+
+      .data-column {
+        display: inline-block;
+        margin-left: 10px;
+
+        .dot {
+          //width: var(--bot-font-size);
+          //height: var(--bot-font-size);
+          //background: var(--bot-color);
+          display: inline-block;
+          opacity: 1;
+          margin-right: 5px;
+        }
+
+        .custom-key {
+          //width: 69px;
+          //height: 40px;
+          //font-size: var(--custom-key-font-size);
+          //font-weight: var(--custom-key-font-weight);
+          //color: var(--custom-key-color);
+          line-height: 40px;
+        }
+
+        .custom-value {
+          //width: 34px;
+          //height: 30px;
+          //font-size: var(--custom-key-font-size);
+          //font-weight: var(--custom-key-font-weight);
+          //color: var(--custom-value-color)
         }
       }
     }
   }
 }
 
-.data-column {
-  display: inline-block;
-  margin-left: 20px;
-
-  .dot {
-    width: 13px;
-    height: 13px;
-    background: #18FEFE;
-    display: inline-block;
-    opacity: 1;
-    margin-right: 5px;
-  }
-
-  .custom-key {
-    width: 69px;
-    height: 40px;
-    font-size: 25px;
-    font-weight: 500;
-    color: #FFF;
-    line-height: 40px;
-  }
-
-  .custom-value {
-    width: 34px;
-    height: 30px;
-    font-size: 25px;
-    font-weight: 400;
-    color: #18FEFE;
-  }
-}
 </style>

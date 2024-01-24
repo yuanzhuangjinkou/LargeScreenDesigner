@@ -1,140 +1,122 @@
 <template>
-<!--  <div-->
-<!--    style="-->
-<!--      overflow: auto;-->
-<!--      border-right: 1px solid #e6e6e6;-->
-<!--      height: 100%;-->
-<!--      width: 100%;-->
-<!--    "-->
-<!--    class="attr-style theme-border-class"-->
-<!--  >-->
-<!--    <el-row>-->
-<!--      <span class="padding-lr">{{ $t("chart.shape_attr") }}</span>-->
-<!--      <el-collapse v-model="attrActiveNames" class="style-collapse">-->
-<!--        <el-collapse-item name="color" :title="$t('chart.color')">-->
-<!--          <color-selector-->
-<!--            :param="param"-->
-<!--            class="attr-selector"-->
-<!--            :chart="chart"-->
-<!--            @onColorChange="onColorChange"-->
-<!--          />-->
-<!--        </el-collapse-item>-->
+  <div
+    style="
+      overflow: auto;
+      border-right: 1px solid #e6e6e6;
+      height: 100%;
+      width: 100%;
+    "
+    class="attr-style theme-border-class"
+  >
+<!--    <color-selector-->
+<!--      :param="param"-->
+<!--      class="attr-selector"-->
+<!--      :chart="chart"-->
+<!--    />-->
+    <el-form ref="form" :model="attrStyle" label-width="80px">
+      <el-form-item label="标题字体">
+        <el-input v-model="attrStyle.titleFontSize"></el-input>
+      </el-form-item>
+      <el-form-item label="标题颜色">
+        <el-input v-model="attrStyle.titleColor"></el-input>
+      </el-form-item>
+      <span>------------------------------------</span>
+      <el-form-item label="标题图片大小">
+        <el-input v-model="attrStyle.titleImgSize"></el-input>
+      </el-form-item>
+      <span>------------------------------------</span>
+      <el-form-item label="文本图例大小">
+        <el-input v-model="attrStyle.botFontSIze"></el-input>
+      </el-form-item>
+      <el-form-item label="文本图例颜色">
+        <el-input v-model="attrStyle.botColor"></el-input>
+      </el-form-item>
+      <span>------------------------------------</span>
+      <el-form-item label="文本字体">
+        <el-input v-model="attrStyle.customKeyFontSize"></el-input>
+      </el-form-item>
+      <el-form-item label="文本加粗">
+        <el-input v-model="attrStyle.customKeyFontWeight"></el-input>
+      </el-form-item>
+      <el-form-item label="文本颜色">
+        <el-input v-model="attrStyle.customKeyColor"></el-input>
+      </el-form-item>
+      <span>------------------------------------</span>
+      <el-form-item label="文本值字体大小">
+        <el-input v-model="attrStyle.customValueFontSize"></el-input>
+      </el-form-item>
+      <el-form-item label="文本值加粗">
+        <el-input v-model="attrStyle.customValueFontWeight"></el-input>
+      </el-form-item>
+      <el-form-item label="文本值颜色">
+        <el-input v-model="attrStyle.customValueColor"></el-input>
+      </el-form-item>
+      <span>------------------------------------</span>
+      <el-form-item label="单位字体大小">
+        <el-input v-model="attrStyle.customUnitFontSize"></el-input>
+      </el-form-item>
+      <el-form-item label="单位加粗">
+        <el-input v-model="attrStyle.customUnitFontWeight"></el-input>
+      </el-form-item>
+      <el-form-item label="单位颜色">
+        <el-input v-model="attrStyle.customUnitColor"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-radio v-model="attrStyle.orientation" label="1">水平</el-radio>
+        <el-radio v-model="attrStyle.orientation" label="2">垂直</el-radio>
+      </el-form-item>
 
-<!--        <el-collapse-item name="label" :title="$t('chart.label')">-->
-<!--          <label-selector-->
-<!--            :param="param"-->
-<!--            class="attr-selector"-->
-<!--            :chart="chart"-->
-<!--            @onLabelChange="onLabelChange"-->
-<!--          />-->
-<!--        </el-collapse-item>-->
-
-<!--        <el-collapse-item name="tooltip" :title="$t('chart.tooltip')">-->
-<!--          <tooltip-selector-->
-<!--            :param="param"-->
-<!--            class="attr-selector"-->
-<!--            :chart="chart"-->
-<!--            @onTooltipChange="onTooltipChange"-->
-<!--          />-->
-<!--        </el-collapse-item>-->
-
-<!--        <el-collapse-item name="suspension" :title="$t('chart.suspension')">-->
-<!--          <suspension-selector-->
-<!--            :param="param"-->
-<!--            class="attr-selector"-->
-<!--            :chart="chart"-->
-<!--            @onSuspensionChange="onSuspensionChange"-->
-<!--          />-->
-<!--        </el-collapse-item>-->
-<!--      </el-collapse>-->
-<!--    </el-row>-->
-
-<!--    <el-row>-->
-<!--      <span class="padding-lr">{{ $t("chart.module_style") }}</span>-->
-<!--      <el-collapse v-model="styleActiveNames" class="style-collapse">-->
-<!--        <el-collapse-item-->
-<!--          v-show="view.type"-->
-<!--          name="title"-->
-<!--          :title="$t('chart.title')"-->
-<!--        >-->
-<!--          <title-selector-->
-<!--            :param="param"-->
-<!--            class="attr-selector"-->
-<!--            :chart="chart"-->
-<!--            @onTextChange="onTextChange"-->
-<!--          />-->
-<!--        </el-collapse-item>-->
-<!--      </el-collapse>-->
-<!--    </el-row>-->
-<!--  </div>-->
+      <el-form-item>
+        <el-button @click="calcStyle">确认</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
-// import ColorSelector from "../../../../components/selector/ColorSelector";
-// import LabelSelector from "../../../../components/selector/LabelSelector";
-// import TitleSelector from "../../../../components/selector/TitleSelector";
-// import TooltipSelector from "../../../../components/selector/TooltipSelector";
-// import SuspensionSelector from "../../../../components/selector/SuspensionSelector";
+import {STYLE_PARAM} from '../../../utils/dynamic'
+// import ColorSelector from "../../../components/selector/ColorSelector";
+
 export default {
   components: {
-    // ColorSelector,
-    // LabelSelector,
-    // TitleSelector,
-    // TooltipSelector,
-    // SuspensionSelector,
+    // ColorSelector
   },
   data() {
     return {
-      attrActiveNames: [],
-      styleActiveNames: [],
+      attrStyle: JSON.parse(JSON.stringify(STYLE_PARAM)),
     };
   },
   props: {
     obj: {
       type: Object,
-      default: () => {},
+      default: () => {
+      },
     },
   },
-
+  created() {
+    console.log('dunamic_style_created: ', this.obj)
+    this.attrStyle = JSON.parse(this.obj.chart.customAttr)
+  },
   computed: {
     param() {
+      console.log('dynamic_param_: ', JSON.stringify(this.obj))
       return this.obj.param;
     },
     view() {
+      console.log('dynamic_view_: ', JSON.stringify(this.obj))
+      // this.attrStyle = JSON.parse(this.obj.chart.customAttr)
       return this.obj.view;
     },
     chart() {
+      console.log('dynamic_chart_: ', JSON.stringify(this.obj))
       return this.obj.chart;
     },
   },
   methods: {
-    onColorChange(val) {
-      this.view.customAttr.color = val;
-      this.calcStyle();
-    },
-    onLabelChange(val) {
-      this.view.customAttr.label = val;
-      this.calcStyle();
-    },
-
-    onTooltipChange(val) {
-      this.view.customAttr.tooltip = val;
-      this.calcStyle();
-    },
-    onSuspensionChange(val) {
-      this.view.customAttr.suspension = val;
-      this.calcStyle();
-    },
-    onTextChange(val) {
-      this.view.customStyle.text = val;
-      this.view.title = val.title;
-      this.calcStyle();
-    },
-    onChangeBackgroundForm(val) {
-      this.view.customStyle.background = val;
-      this.calcStyle();
-    },
     calcStyle() {
+      console.log('dynamic_style_view', this.view)
+      console.log('dynamic_style_attrStyle', this.attrStyle)
+      this.view.customAttr = this.attrStyle
       this.$emit("plugin-call-back", {
         eventName: "plugins-calc-style",
         eventParam: this.view,
@@ -148,12 +130,15 @@ export default {
 .padding-lr {
   padding: 0 6px;
 }
+
 span {
   font-size: 12px;
 }
+
 .el-radio {
   margin: 5px;
 }
+
 .radio-span ::v-deep .el-radio__label {
   margin-left: 2px;
 }
