@@ -1,0 +1,13 @@
+{
+    "name": "自定义字体",
+    "free": 0,
+    "store": "thirdpart",
+    "cost": 0,
+    "category": "view",
+    "descript": "CustomText",
+    "version": "1.18.14",
+    "creator": "DATAEASE",
+    "moduleName": "view-CustomText-backend",
+    "require": "1.10.0",
+    "dsType": ""
+}
