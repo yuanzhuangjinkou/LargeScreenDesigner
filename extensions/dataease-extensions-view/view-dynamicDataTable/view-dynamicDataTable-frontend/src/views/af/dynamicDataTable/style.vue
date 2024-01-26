@@ -94,28 +94,21 @@ export default {
     },
   },
   created() {
-    console.log('dunamic_style_created: ', this.obj)
     this.attrStyle = JSON.parse(this.obj.chart.customAttr)
   },
   computed: {
     param() {
-      console.log('dynamic_param_: ', JSON.stringify(this.obj))
       return this.obj.param;
     },
     view() {
-      console.log('dynamic_view_: ', JSON.stringify(this.obj))
-      // this.attrStyle = JSON.parse(this.obj.chart.customAttr)
       return this.obj.view;
     },
     chart() {
-      console.log('dynamic_chart_: ', JSON.stringify(this.obj))
       return this.obj.chart;
     },
   },
   methods: {
     calcStyle() {
-      console.log('dynamic_style_view', this.view)
-      console.log('dynamic_style_attrStyle', this.attrStyle)
       this.view.customAttr = this.attrStyle
       this.$emit("plugin-call-back", {
         eventName: "plugins-calc-style",

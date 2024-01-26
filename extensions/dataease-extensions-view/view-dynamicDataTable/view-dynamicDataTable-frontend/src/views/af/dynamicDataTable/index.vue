@@ -193,8 +193,6 @@ export default {
 
     // 样式计算
     titleStyle() {
-      console.log('计算属性: ', this.chart)
-      console.log('计算属性: ', JSON.parse(this.chart.customAttr))
       return {
         color: JSON.parse(this.chart.customAttr).titleColor,
         fontSize: JSON.parse(this.chart.customAttr).titleFontSize,
@@ -241,12 +239,10 @@ export default {
   watch: {
     active: {
       handler(newVal, oldVla) {
-        console.log('dynamicDataTable_this.active', JSON.stringify(this.active))
       }
     },
     chart: {
       handler(newVal, oldVal) {
-        console.log('dynamicDataTable_this.chart', JSON.stringify(this.chart))
         if (this.chart) {
           this.zhCN = JSON.parse(this.chart.data.x[0]).zhCN
           this.data = JSON.parse(this.chart.data.x[0]).data
