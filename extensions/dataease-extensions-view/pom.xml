@@ -14,6 +14,7 @@
         <module>view-afamap</module>
         <module>view-dynamicDataTable</module>
         <module>view-buttonfilter</module>
+        <module>view-customText</module>
         <!--        <module>view-racebar</module>-->
 <!--        <module>view-3dpie</module>-->
 <!--        <module>view-symbolmap</module>-->
