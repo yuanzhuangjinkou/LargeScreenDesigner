@@ -10,7 +10,7 @@
     />
     <div>
       <span :style="textStyle" class="span">{{ text }}</span>
-      <span :style="unitStyle" class="span unit">({{ unit }})</span>
+      <span v-if="unit !== null" :style="unitStyle" class="span unit">({{ unit }})</span>
     </div>
 
   </div>
@@ -147,7 +147,8 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-.div {}
+.div {
+}
 
 .span {
   //width: 325px;
