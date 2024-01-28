@@ -22,16 +22,6 @@ export default {
       type: Array,
       default: [],
     },
-    // 秦华各分公司区域
-    companyBoarder: {
-      type: Array,
-      default: [],
-    },
-    // 其它周边天然气公司区域
-    otherCompanyBoarder: {
-      type: Array,
-      default: [],
-    },
     // 高亮分公司名称
     highlightCompanyName: {
       type: String,
@@ -40,8 +30,8 @@ export default {
     // 巡检人员轨迹点
     coordinatesOfInspectorsList: {
       type: Object,
-      default:  function() {
-        return { /* your default object here */ };
+      default: function () {
+        return { /* your default object here */};
       }
     },
   },
@@ -134,7 +124,7 @@ export default {
     createMarkers() {
       let _this = this;
 
-      if(!this.map) {
+      if (!this.map) {
         this.initMap();
       }
 
@@ -144,13 +134,13 @@ export default {
 
         console.warn(">>> 标记点个数：", this.markerList.length)
 
-        for(let i = this.markerList.length - 1; i >= 0; i--) {
+        for (let i = this.markerList.length - 1; i >= 0; i--) {
           let markerItem = this.markerList[i];
           reverseMarkerList.push(markerItem);
         }
         console.log('reverseMarkerList_', reverseMarkerList)
         reverseMarkerList.forEach(position => {
-          if(position.isShow) {
+          if (position.isShow) {
             let marker = new AMap.Marker({
               position: position.position,
               title: position.title,
@@ -179,57 +169,13 @@ export default {
     },
     // 初始化范围
     initBoarder() {
-      if(this.companyBoarder.length > 0) {
-        let boarder = [];
-        let _this = this;
-        for(let i = 0; i < this.companyBoarder.length; i++) {
-          // 初始化矢量图形
-          // let polygon = new AMap.Polygon({
-          //   path: this.companyBoarder[i].path,
-          //   strokeColor: '#00feab',
-          //   fillColor: '#99ff99',
-          //   fillOpacity: 0.2
-          // });
-          // polygon.companyName = this.companyBoarder[i].name;
-          // 绑定鼠标移入高亮事件
-          polygon.on("mouseover", function(e) {
-            let polygon = e.target;
-            _this.highlightPolygon = polygon;
-            polygon.setOptions({
-              strokeColor: '#fde311',
-              fillColor: '#ffff99',
-              fillOpacity: 0.5,
-              zIndex: 20
-            })
-          });
-          // 绑定鼠标移出还原高亮事件
-          polygon.on("mouseout", function(e) {
-            let polygon = e.target;
-            _this.highlightPolygon = null;
-            polygon.setOptions({
-              strokeColor: '#00feab',
-              fillColor: '#99ff99',
-              fillOpacity: .2,
-              zIndex: 10
-            })
-          })
-          // 绑定鼠标单击事件
-          polygon.on("click", function(e) {
-            _this.$emit("polygon-click", e);
-          })
-          this.allPolygon.push(polygon)
-          boarder.push(polygon)
-        }
-        // 地图绑定
-        this.map.add(boarder)
-      }
     },
     // 初始化其他公司边界
     initOtherCompanyBoarder() {
-      if(this.otherCompanyBoarder.length > 0) {
+      if (this.otherCompanyBoarder.length > 0) {
         let boarder = [];
         let _this = this;
-        for(let i = 0; i < this.otherCompanyBoarder.length; i++) {
+        for (let i = 0; i < this.otherCompanyBoarder.length; i++) {
           // 初始化矢量图形
           let polygon = new AMap.Polygon({
             path: this.otherCompanyBoarder[i],
@@ -240,7 +186,7 @@ export default {
           });
 
           // 绑定鼠标单击事件
-          polygon.on("click", function(e) {
+          polygon.on("click", function (e) {
             _this.$emit("polygon-click", e);
           })
 
@@ -261,12 +207,12 @@ export default {
     // window.addEventListener('resize', this.resize)
     this.initPipe();
     // 根据默认值来初始化管线显示
-    for(let i = 0; i < this.showPipeLayer.length; i++) {
+    for (let i = 0; i < this.showPipeLayer.length; i++) {
       let temp = this.showPipeLayer[i];
-      if(temp === 'HP') {
+      if (temp === 'HP') {
         this.pipeHp.show();
       }
-      if(temp === 'MP') {
+      if (temp === 'MP') {
         this.pipeMp.show();
       }
     }
@@ -280,88 +226,88 @@ export default {
     //     alert("当前环境不支持轨迹展示！");
     //     return;
     //   }
-      //创建组件实例
-      // _this.simplifier = new PathSimplifier({
-      //   zIndex: 103,
-      //   map: _this.map, //所属的地图实例
-      //   autoSetFitView: false,
-      //   getPath: function(pathData, pathIndex) {
-      //     //返回轨迹数据中的节点坐标信息，[AMap.LngLat, AMap.LngLat...] 或者 [[lng|number,lat|number],...]
-      //     return pathData.path;
-      //   },
-      //   getHoverTitle: function(pathData, pathIndex, pointIndex) {
-      //     //返回鼠标悬停时显示的信息
-      //     if(pointIndex >= 0) {
-      //       //鼠标悬停在某个轨迹节点上
-      //       return (
-      //         pathData.name +
-      //         "，点:" +
-      //         (pointIndex + 1) +
-      //         "/" +
-      //         pathData.path.length
-      //       );
-      //     }
-      //     //鼠标悬停在节点之间的连线上
-      //     return pathData.name + "，点数量" + pathData.path.length;
-      //   },
-      //   renderOptions: {
-      //     // 轨迹线样式
-      //     pathLineStyle: {
-      //       strokeStyle: "#52C4FF",
-      //       lineWidth: 5,
-      //       borderStyle: "#52C4FF",
-      //       borderWidth: 0,
-      //       dirArrowStyle: true,
-      //     },
-      //     // 轨迹线悬停样式
-      //     pathLineHoverStyle: {
-      //       strokeStyle: "#52C4FF",
-      //       lineWidth: 8,
-      //       borderStyle: "#52C4FF",
-      //       borderWidth: 0,
-      //       dirArrowStyle: true,
-      //     },
-      //     // 轨迹线选中样式
-      //     pathLineSelectedStyle: {
-      //       strokeStyle: "#52C4FF",
-      //       lineWidth: 5,
-      //       borderStyle: "#52C4FF",
-      //       borderWidth: 0,
-      //       dirArrowStyle: true,
-      //     },
-      //     // 起点样式
-      //     startPointStyle: {
-      //       radius: 0,
-      //     },
-      //     // 终点样式
-      //     endPointStyle: {
-      //       radius: 0,
-      //     },
-      //     // 显示文字样式
-      //     hoverTitleStyle: {
-      //       classNames: "path-simplifier-title",
-      //     },
-      //     // 巡航器样式
-      //     // pathNavigatorStyle: {
-      //     //   width: 120,
-      //     //   height: 200,
-      //     //   autoRotate: false,
-      //     //   content: PathSimplifier.Render.Canvas.getImageContent(
-      //     //     './public/巡检.png',
-      //     //     onload,
-      //     //     onerror
-      //     //   ),
-      //     //   // 经过路线的样式
-      //     //   pathLinePassedStyle: {
-      //     //     strokeStyle: "#00fff6",
-      //     //     lineWidth: 5,
-      //     //     borderStyle: "#52C4FF",
-      //     //     borderWidth: 0,
-      //     //     dirArrowStyle: true,
-      //     //   },
-      //     // },
-      //   },
-      // });
+    //创建组件实例
+    // _this.simplifier = new PathSimplifier({
+    //   zIndex: 103,
+    //   map: _this.map, //所属的地图实例
+    //   autoSetFitView: false,
+    //   getPath: function(pathData, pathIndex) {
+    //     //返回轨迹数据中的节点坐标信息，[AMap.LngLat, AMap.LngLat...] 或者 [[lng|number,lat|number],...]
+    //     return pathData.path;
+    //   },
+    //   getHoverTitle: function(pathData, pathIndex, pointIndex) {
+    //     //返回鼠标悬停时显示的信息
+    //     if(pointIndex >= 0) {
+    //       //鼠标悬停在某个轨迹节点上
+    //       return (
+    //         pathData.name +
+    //         "，点:" +
+    //         (pointIndex + 1) +
+    //         "/" +
+    //         pathData.path.length
+    //       );
+    //     }
+    //     //鼠标悬停在节点之间的连线上
+    //     return pathData.name + "，点数量" + pathData.path.length;
+    //   },
+    //   renderOptions: {
+    //     // 轨迹线样式
+    //     pathLineStyle: {
+    //       strokeStyle: "#52C4FF",
+    //       lineWidth: 5,
+    //       borderStyle: "#52C4FF",
+    //       borderWidth: 0,
+    //       dirArrowStyle: true,
+    //     },
+    //     // 轨迹线悬停样式
+    //     pathLineHoverStyle: {
+    //       strokeStyle: "#52C4FF",
+    //       lineWidth: 8,
+    //       borderStyle: "#52C4FF",
+    //       borderWidth: 0,
+    //       dirArrowStyle: true,
+    //     },
+    //     // 轨迹线选中样式
+    //     pathLineSelectedStyle: {
+    //       strokeStyle: "#52C4FF",
+    //       lineWidth: 5,
+    //       borderStyle: "#52C4FF",
+    //       borderWidth: 0,
+    //       dirArrowStyle: true,
+    //     },
+    //     // 起点样式
+    //     startPointStyle: {
+    //       radius: 0,
+    //     },
+    //     // 终点样式
+    //     endPointStyle: {
+    //       radius: 0,
+    //     },
+    //     // 显示文字样式
+    //     hoverTitleStyle: {
+    //       classNames: "path-simplifier-title",
+    //     },
+    //     // 巡航器样式
+    //     // pathNavigatorStyle: {
+    //     //   width: 120,
+    //     //   height: 200,
+    //     //   autoRotate: false,
+    //     //   content: PathSimplifier.Render.Canvas.getImageContent(
+    //     //     './public/巡检.png',
+    //     //     onload,
+    //     //     onerror
+    //     //   ),
+    //     //   // 经过路线的样式
+    //     //   pathLinePassedStyle: {
+    //     //     strokeStyle: "#00fff6",
+    //     //     lineWidth: 5,
+    //     //     borderStyle: "#52C4FF",
+    //     //     borderWidth: 0,
+    //     //     dirArrowStyle: true,
+    //     //   },
+    //     // },
+    //   },
+    // });
     // });
   },
   created() {
@@ -372,12 +318,12 @@ export default {
       handler(newVal) {
         this.pipeHp.hide();
         this.pipeMp.hide();
-        for(let i = 0; i < newVal.length; i++) {
+        for (let i = 0; i < newVal.length; i++) {
           let temp = newVal[i];
-          if(temp === 'HP') {
+          if (temp === 'HP') {
             this.pipeHp.show();
           }
-          if(temp === 'MP') {
+          if (temp === 'MP') {
             this.pipeMp.show();
           }
         }
@@ -414,26 +360,10 @@ export default {
     //   },
     //   deep: true
     // },
-    // 秦华分公司边界
-    companyBoarder: function(newVal) {
-      if(newVal.length > 0) {
-        let boarder = [];
-        for(let i = 0; i < newVal.length; i++) {
-          let polygon = new AMap.Polygon({
-            path: newVal[i].path
-          })
-          boarder.push(polygon)
-        }
-        this.map.add(boarder)
-      }
-    },
-    // 其它周边天然气公司区域
-    otherCompanyBoarder: function(newVal) {
-    },
     // 标记点
     markerList: {
       handler(newVal) {
-        if(this.infoWindow !== null) {
+        if (this.infoWindow !== null) {
           this.infoWindow.close()
         }
         this.removeMarkers()
@@ -507,6 +437,30 @@ export default {
     width: 220px;
     height: 60px;
     background-image: url("../../../assets/yuncheng/组3248@2x.png");
+    background-size: 100% 100%;
+
+    .text {
+      transform: translate(120%, -40%);
+      font-size: 20px;
+    }
+  }
+
+  .bg-marker1 {
+    width: 220px;
+    height: 60px;
+    background-image: url("../../../assets/yuncheng/组4019@2x.png");
+    background-size: 100% 100%;
+
+    .text {
+      transform: translate(120%, -40%);
+      font-size: 20px;
+    }
+  }
+
+  .bg-marker2 {
+    width: 220px;
+    height: 60px;
+    background-image: url("../../../assets/yuncheng/组4085@2x.png");
     background-size: 100% 100%;
 
     .text {
