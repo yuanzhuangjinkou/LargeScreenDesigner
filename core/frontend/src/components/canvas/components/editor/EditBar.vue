@@ -81,14 +81,15 @@
           @click.stop="showViewDetails('details')"
         />
       </span>
-      <span :title="$t('route.exportExcel')">
-        <i
-          v-if="exportExcelShow"
-          style="line-height: 24px"
-          class="el-icon-document-delete"
-          @click.stop="exportExcelDownload()"
-        />
-      </span>
+<!--      导出excel -->
+<!--      <span :title="$t('route.exportExcel')">-->
+<!--        <i-->
+<!--          v-if="exportExcelShow"-->
+<!--          style="line-height: 24px"-->
+<!--          class="el-icon-document-delete"-->
+<!--          @click.stop="exportExcelDownload()"-->
+<!--        />-->
+<!--      </span>-->
       <setting-menu
         v-if="activeModel==='edit'"
         style="float: right;height: 24px!important;"
