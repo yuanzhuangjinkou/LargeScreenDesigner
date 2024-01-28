@@ -67,20 +67,22 @@
           @click.stop="auxiliaryMatrixChange"
         />
       </span>
-      <span :title="$t('panel.enlarge')">
-        <i
-          v-if="enlargeShow"
-          class="icon iconfont icon-fangda"
-          @click.stop="showViewDetails('enlarge')"
-        />
-      </span>
-      <span :title="$t('panel.details')">
-        <i
-          v-if="detailsShow"
-          class="icon iconfont icon-chakan"
-          @click.stop="showViewDetails('details')"
-        />
-      </span>
+<!--      放大-->
+<!--      <span :title="$t('panel.enlarge')">-->
+<!--        <i-->
+<!--          v-if="enlargeShow"-->
+<!--          class="icon iconfont icon-fangda"-->
+<!--          @click.stop="showViewDetails('enlarge')"-->
+<!--        />-->
+<!--      </span>-->
+<!--      详情-->
+<!--      <span :title="$t('panel.details')">-->
+<!--        <i-->
+<!--          v-if="detailsShow"-->
+<!--          class="icon iconfont icon-chakan"-->
+<!--          @click.stop="showViewDetails('details')"-->
+<!--        />-->
+<!--      </span>-->
 <!--      导出excel -->
 <!--      <span :title="$t('route.exportExcel')">-->
 <!--        <i-->
@@ -107,13 +109,13 @@
           />
         </span>
       </setting-menu>
-      <span :title="$t('panel.cancel_linkage')">
-        <i
-          v-if="curComponent.type==='view'&&existLinkage"
-          class="icon iconfont icon-quxiaoliandong"
-          @click.stop="clearLinkage"
-        />
-      </span>
+<!--      <span :title="$t('panel.cancel_linkage')">-->
+<!--        <i-->
+<!--          v-if="curComponent.type==='view'&&existLinkage"-->
+<!--          class="icon iconfont icon-quxiaoliandong"-->
+<!--          @click.stop="clearLinkage"-->
+<!--        />-->
+<!--      </span>-->
       <span :title="$t('panel.switch_picture')">
         <i
           v-if="activeModel==='edit'&&curComponent&&curComponent.type==='picture-add'"
