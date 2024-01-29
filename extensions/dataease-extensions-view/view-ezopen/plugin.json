@@ -1,0 +1,13 @@
+{
+    "name": "ezopen视频播放",
+    "free": 0,
+    "store": "thirdpart",
+    "cost": 0,
+    "category": "view",
+    "descript": "ezopen",
+    "version": "1.18.14",
+    "creator": "DATAEASE",
+    "moduleName": "view-ezopen-backend",
+    "require": "1.10.0",
+    "dsType": ""
+}
