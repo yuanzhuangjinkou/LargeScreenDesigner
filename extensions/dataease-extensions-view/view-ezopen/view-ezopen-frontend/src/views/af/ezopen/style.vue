@@ -8,14 +8,17 @@
     "
     class="attr-style theme-border-class"
   >
-<!--    <el-form ref="form" :model="attrStyle" label-width="80px">-->
-<!--      <el-form-item label="标题字体大小">-->
-<!--        <el-input v-model="attrStyle.titleFontSize"></el-input>-->
-<!--      </el-form-item>-->
-<!--      <el-form-item>-->
-<!--        <el-button @click="calcStyle">确认</el-button>-->
-<!--      </el-form-item>-->
-<!--    </el-form>-->
+    <el-form ref="form" :model="attrStyle" label-width="80px">
+      <el-form-item label="视频弹框宽度">
+        <el-input v-model="attrStyle.ezWidth"></el-input>
+      </el-form-item>
+      <el-form-item label="视频弹框高度">
+        <el-input v-model="attrStyle.ezHeight"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="calcStyle">确认</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 

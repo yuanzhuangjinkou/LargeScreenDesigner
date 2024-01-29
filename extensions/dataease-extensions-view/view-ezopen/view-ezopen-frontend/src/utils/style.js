@@ -1,4 +1,4 @@
 export const STYLE_PARAM = {
-  titleFontSize: "20px",
-  valueFontSize: "15px",
+  ezWidth: "600px",
+  ezHeight: "400px",
 }
