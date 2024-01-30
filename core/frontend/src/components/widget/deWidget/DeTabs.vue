@@ -7,6 +7,16 @@
       v-if="maskShow"
       class="frame-mask edit-mask"
     />
+    <el-select v-model="selectedTab" placeholder="选择标签页" @change="handleTabChange">
+      <el-option
+        v-for="(tab, index) in element.options.tabList"
+        :key="tab.name + index"
+        :label="tab.title"
+        :value="tab.name"
+      ></el-option>
+    </el-select>
+
+
     <dataease-tabs
       ref="deTabsConstom"
       v-model="activeTabName"
@@ -280,6 +290,14 @@ export default {
   },
   data() {
     return {
+      isOpen: false,
+      selectedOption: '',
+      selectWidth: '200px',
+      selectBackground: 'lightgray',
+      dropdownBackground: 'lightblue',
+
+
+      selectedTab: '1',
       tabsAreaScroll: false,
       timer: null,
       scrollLeft: 50,
@@ -479,6 +497,7 @@ export default {
     }
   },
   created() {
+    console.log('this.element', this.element.options.tabList)
     bus.$on('add-new-tab', this.addNewTab)
     this.$nextTick(() => {
       this.activeTabName = this.element.options.tabList[0].name
@@ -495,6 +514,18 @@ export default {
     bus.$off('add-new-tab', this.addNewTab)
   },
   methods: {
+    handleTabChange(value) {
+      this.activeTabName = value;
+    },
+    // 写
+    toggleDropdown() {
+      this.isOpen = !this.isOpen;
+    },
+    selectOption(option) {
+      this.selectedOption = option.name;
+      this.isOpen = false;
+    },
+
     triggerTabsFilterLoaded(p) {
       if (!this.element.options.tabList.length) {
         return
@@ -793,6 +824,41 @@ export default {
 .canvas_move_in {
   border-color: blueviolet;
 }
+
+::v-deep .el-tabs__nav {
+  display: none;
+}
+
+::v-deep .el-input__inner {
+  //height: 400px;
+  background-color: rgba(21, 60, 116, 0.7); /* 设置背景颜色为 #153C74，透明度为 0.5 */
+  padding-left: 25px;
+  font-size: 25px;
+  color: #FFF;
+  text-align: center; /* 将文本水平居中 */
+  border: 2px solid #18AEC8; /* 边框样式，2px 宽度，黑色 */
+  border-radius: 10px; /* 可选：设置边框圆角 */
+}
+
+
+/* 未选中状态下拉框的字体样式 */
+.el-select-dropdown .el-select-dropdown__item {
+  //height: 100px;
+  color: #FFF;
+  background-color: rgba(21, 60, 116, 0.7); /* 设置背景颜色为 #153C74，透明度为 0.5 */
+  /*background-image: url(../../assets/组4087.png);*/
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+}
+
+/* 选中状态下拉框中的选项的字体样式 */
+.el-select-dropdown .el-select-dropdown__item.selected {
+  font-family: "YourFontName", sans-serif; /* 设置选中状态下的选项的字体样式 */
+  color: #FFF;
+}
+
 
 ::v-deep .el-tabs__nav-prev {
   line-height: 25px;
