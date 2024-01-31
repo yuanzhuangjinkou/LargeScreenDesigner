@@ -830,22 +830,30 @@ export default {
 }
 
 ::v-deep .el-input__inner {
-  //height: 400px;
+  /*height: 400px;*/
+  width: 200px;
   background-color: rgba(21, 60, 116, 0.7); /* 设置背景颜色为 #153C74，透明度为 0.5 */
+  background-image: url("../../../assets/yuncheng/select.png");
+  background-size: 100% 100%;
   padding-left: 25px;
-  font-size: 25px;
+  font-size: 22px;
+  font-weight: bold;
   color: #FFF;
   text-align: center; /* 将文本水平居中 */
   border: 2px solid #18AEC8; /* 边框样式，2px 宽度，黑色 */
   border-radius: 10px; /* 可选：设置边框圆角 */
 }
 
-
 /* 未选中状态下拉框的字体样式 */
 .el-select-dropdown .el-select-dropdown__item {
-  //height: 100px;
+  /*height: 100px;*/
+  margin-bottom: 3px;
+  border: 1px solid #18AEC8; /* 边框样式，2px 宽度，黑色 */
+  border-radius: 10px; /* 可选：设置边框圆角 */
+  width: 200px;
+  font-size: 22px;
   color: #FFF;
-  background-color: rgba(21, 60, 116, 0.7); /* 设置背景颜色为 #153C74，透明度为 0.5 */
+  background-color: rgba(40, 80, 130, 0.7); /* 设置背景颜色为 #153C74，透明度为 0.5 */
   /*background-image: url(../../assets/组4087.png);*/
   background-size: 100% 100%;
   display: flex;
@@ -853,11 +861,11 @@ export default {
   align-items: center; /* 垂直居中 */
 }
 
-/* 选中状态下拉框中的选项的字体样式 */
-.el-select-dropdown .el-select-dropdown__item.selected {
-  font-family: "YourFontName", sans-serif; /* 设置选中状态下的选项的字体样式 */
-  color: #FFF;
-}
+///* 选中状态下拉框中的选项的字体样式 */
+//.el-select-dropdown .el-select-dropdown__item.selected {
+//  font-family: "YourFontName", sans-serif; /* 设置选中状态下的选项的字体样式 */
+//  color: #FFF;
+//}
 
 
 ::v-deep .el-tabs__nav-prev {
