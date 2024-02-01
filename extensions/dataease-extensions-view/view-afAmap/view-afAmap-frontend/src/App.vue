@@ -2,6 +2,7 @@
   <div id="app">
 <!--    <plugin-demo/>-->
     <Index :obj="this.data"/>
+<!--    <tabs></tabs>-->
 <!--    <Test/>-->
   </div>
 </template>
@@ -13,6 +14,7 @@ import Style from "./views/echarts/map/buddle/style";
 import Type from "./views/echarts/map/buddle/type";
 import Data from "./views/echarts/map/buddle/data";
 import Test from "./views/test/test";
+import tabs from "./views/tabs";
 
 export default {
   name: 'App',
@@ -22,7 +24,8 @@ export default {
     Style,
     Type,
     Data,
-    Test
+    Test,
+    tabs
   },
   data() {
     return {
@@ -33,12 +36,4 @@ export default {
 </script>
 
 <style>
-#app {
-  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
-  /*-webkit-font-smoothing: antialiased;*/
-  /*-moz-osx-font-smoothing: grayscale;*/
-  /*text-align: center;*/
-  /*color: #2c3e50;*/
-  /*margin-top: 60px;*/
-}
 </style>

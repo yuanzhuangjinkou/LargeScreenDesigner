@@ -12,16 +12,6 @@
             @polygon-click="windowClose"
             :highlight-company-name="highlightCompanyName"
       />
-      <!-- 将按钮放在地图上面，z-index 设置为较大的值 -->
-      <!--      <div-->
-      <!--        style="position: absolute; top: 100px; left: 100px; background-color: pink; width: 100px; height: 50px; z-index: 100;">-->
-      <!--        <select v-model="selectedOption" @change="handleSelectionChange">-->
-      <!--          <option value="" disabled selected>请选择</option>-->
-      <!--          <option value="营业厅">营业厅</option>-->
-      <!--          <option value="气源点">气源点</option>-->
-      <!--          <option value="分输站">分输站</option>-->
-      <!--        </select>-->
-      <!--      </div>-->
     </div>
 
     <!-- 弹窗 -->
@@ -38,7 +28,8 @@ import {
 import BMap from '../BMap';
 import WindowInfo from "../WindowInfo.vue";
 import ViewTrackBar from '../../../../components/views/ViewTrackBar'
-
+import { getNumber } from '../../../../api'
+import axios from "axios";
 export default {
   name: "ChartComponent",
   components: {
@@ -91,21 +82,26 @@ export default {
     }
   },
   methods: {
+    axiosTest() {
+      console.log('axios')
+      axios.post('/user/getNumber')
+      .then(res => {
+        console.log('axiosTest: ', res)
+      })
+      .cancel(err => {
+        console.log('axiosTestError: ', err)
+      })
+    },
     async markerClick(e) {
 
       // 获取点击的点的名称,用来判断是否需要显示弹窗
       let name = e.target.De.title
-      // if(name.includes('分公司')) {
-      // 请求数据
-      const params = {
-        tableName: 'T_CUSTOMER_DATA_STATISTICS',
-        condition: `F_DEPNAME = '${name}'`
-      }
 
       this.infoWindow.info = {'name': name};
-
+      console.log("name: ", name)
       // 遍历标记点隐藏被点击的
-      this.markerList.forEach(item => item.isShow = item.title !== name)
+      this.markerList.forEach(item => item.isShow = item.title === name)
+      console.log("name2: ", this.markerList)
 
       // 打开弹窗
       this.infoWindow.window.setContent(
@@ -116,13 +112,12 @@ export default {
         e.target.getPosition()
       );
       e.target.getMap().setCenter(e.lnglat.offset(0, 0))
-      // }
     },
     // 地图点击事件
     windowClose() {
       console.log('>>>> 地图点击')
       // 遍历标记点显示被隐藏的
-      this.markerList.forEach(item => item.isShow = true)
+      // this.markerList.forEach(item => item.isShow = true)
       // 关闭弹窗
       this.infoWindow.window.close()
     },
@@ -193,6 +188,7 @@ export default {
 
   },
   mounted() {
+    this.axiosTest()
   },
   // 启动项目需要注释 props, computed
   props: {
@@ -239,7 +235,7 @@ export default {
         }
       },
       deep: true,
-      immediate: true
+      // immediate: true
     }
   },
 }

@@ -15,15 +15,16 @@
         <div class="back">
           <a-row class="custom-row">
             <img class="custom-title-img" :style="titleImg" src="../../../assets/yuncheng/组3908@2x.png" alt="">
-            <span :style="titleStyle">{{ item.name }}</span>
+            <span :style="titleStyle">{{ item.userName }}</span>
           </a-row>
 
           <a-row>
-            <a-col align="left" :span="12" v-for="(value, key, index) in item" :key="key" v-if="key !== 'name'" style="margin-bottom: 10px">
+            <a-col align="left" :span="12" v-for="(value, key, index) in item" :key="key" v-if="key !== 'userName' && zhCN[key]" style="margin-bottom: 10px">
               <div class="data-column" v-if="orientation === '1'">
                 <!-- 点 -->
                   <span class="dot" :style="dot"></span>
                   <span class="custom-key" :style="customKey">{{ zhCN[key] }} &nbsp &nbsp</span>
+
                   <span class="custom-value" :style="customValue">{{ value }}</span>
                   <!-- Unit -->
                   <span v-if="showUnit(zhCN[key])" class="custom-unit" :style="customUnit">{{ getUnit(zhCN[key]) }}</span>
@@ -68,42 +69,42 @@ export default {
       },
       data: [
         {
-          name: "667场站",
+          userName: "667场站",
           T1: 1,
           T2: 2,
           T3: 3,
           T4: 4,
         },
         {
-          name: "668场站",
+          userName: "668场站",
           T1: 1,
           T2: 2,
           T3: 3,
           T4: 4,
         },
         {
-          name: "669场站",
+          userName: "669场站",
           T1: 1,
           T2: 2,
           T3: 3,
           T4: 4,
         },
         {
-          name: "700场站",
+          userName: "700场站",
           T1: 1,
           T2: 2,
           T3: 3,
           T4: 4,
         },
         {
-          name: "770场站",
+          userName: "770场站",
           T1: 1,
           T2: 2,
           T3: 3,
           T4: 4,
         },
         {
-          name: "771场站",
+          userName: "771场站",
           T1: 1,
           T2: 2,
           T3: 3,
@@ -114,16 +115,19 @@ export default {
   },
   methods: {
     showUnit(key) {
+      if(key == null)
+        return false
       return key.includes('温度') || key.includes('流量') || key.includes('压力');
     },
     getUnit(key) {
+      if(key == null)
+        return false
       if (key.includes('温度')) return '(℃)';
       if (key.includes('流量')) return '(m³/h)';
       if (key.includes('压力')) return '(mpa)';
       return '';
     },
     trackClick(trackAction) {
-      console.log('trackClick_', trackAction)
 
       let id = null;
       this.chart.data.sourceFields.forEach(field => {
@@ -181,7 +185,6 @@ export default {
       return this.obj.filter || {}
     },
     trackMenu() {
-      console.log('trackMenu_', this.obj.trackMenu)
       return this.obj.trackMenu || ['drill']
     },
     searchCount() {
@@ -244,8 +247,8 @@ export default {
     chart: {
       handler(newVal, oldVal) {
         if (this.chart) {
-          this.zhCN = JSON.parse(this.chart.data.x[0]).zhCN
-          this.data = JSON.parse(this.chart.data.x[0]).data
+          this.zhCN = JSON.parse(this.chart.data.x[0].substring(6)).zhCN
+          this.data = JSON.parse(this.chart.data.x[0].substring(6)).data
           this.$forceUpdate();
         }
       },
@@ -284,11 +287,9 @@ export default {
   //--custom-value-font-size: 25px;
   //--custom-value-font-weight: 800;
   //--custom-value-color: #18FEFE;
-
   max-height: 99%;
   width: 100%;
   overflow-y: auto;
-
   .data-row {
     margin-bottom: 10px;
 

@@ -45,6 +45,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         target: "http://117.35.109.162:8400/",
         changeOrigin: true
       },
+      '/user': {
+        target: 'http://127.0.0.1:9000',
+        changeOrigin: true,
+      },
     },
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {

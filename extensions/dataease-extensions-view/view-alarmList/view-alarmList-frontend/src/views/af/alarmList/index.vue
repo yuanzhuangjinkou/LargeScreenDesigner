@@ -163,8 +163,8 @@ export default {
       handler(newVal, oldVal) {
         console.log('alarmList.obj', JSON.stringify(this.obj))
         if (this.chart) {
-          this.zhCN = JSON.parse(this.chart.data.x[0]).zhCN
-          this.data = JSON.parse(this.chart.data.x[0]).data
+          this.zhCN = JSON.parse(this.chart.data.x[0].substring(6)).zhCN
+          this.data = JSON.parse(this.chart.data.x[0].substring(6)).data
           this.$forceUpdate();
         }
       },

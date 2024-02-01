@@ -34,7 +34,6 @@ export default {
   },
   methods: {
     trackClick(trackAction) {
-      console.log('trackClick_', trackAction)
 
       let id = null;
       this.chart.data.sourceFields.forEach(field => {
@@ -103,8 +102,6 @@ export default {
 
     // 样式计算
     textStyle() {
-      console.log('计算属性: ', this.chart)
-      console.log('计算属性: ', JSON.parse(this.chart.customAttr))
       return {
         fontSize: JSON.parse(this.chart.customAttr).fontSize,
         fontWeight: JSON.parse(this.chart.customAttr).fontWeight,
@@ -126,10 +123,12 @@ export default {
     },
     chart: {
       handler(newVal, oldVal) {
-        console.log('customText_this.chart', JSON.stringify(this.obj))
         if (this.chart) {
-          this.text = JSON.parse(this.chart.data.x[0]).text
-          this.unit = JSON.parse(this.chart.data.x[0]).unit
+          console.log('1234')
+          this.text = JSON.parse(this.chart.data.x[0].substring(6)).value
+          this.unit = JSON.parse(this.chart.data.x[0].substring(6)).hasOwnProperty('unit') ? JSON.parse(this.chart.data.x[0].substring(6)).unit : null
+          console.log('this.unit', this.unit)
+          console.log('this.text', this.text)
           this.$forceUpdate();
         }
       },
