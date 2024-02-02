@@ -24,11 +24,15 @@ module.exports = {
   devServer: {
     port: port,
     proxy: {
-      '^(?!/login)': {
-        target: 'http://localhost:8081/',
-        ws: true,
-        changeOrigin: false
-      }
+      // '^(?!/login)': {
+      //   target: 'http://localhost:8081/',
+      //   ws: true,
+      //   changeOrigin: false
+      // },
+      '/api': {
+        target: 'http://120.46.92.69:8765/',
+        changeOrigin: true,
+      },
     },
     open: true,
     overlay: {
