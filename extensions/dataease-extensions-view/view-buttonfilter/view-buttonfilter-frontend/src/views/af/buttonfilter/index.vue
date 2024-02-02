@@ -35,20 +35,11 @@ export default {
   },
   methods: {
     clickButton() {
-      console.log('点击了')
-      // this.buttonClass = '_default_51'
       // 触发联动事件
       this.trackClick('linkage')
     },
     trackClick(trackAction) {
-      console.log('trackClick_', trackAction)
 
-      // 每个视图 此处组织联动数据数据各不相同
-      // this.chart.data.sourceFields.forEach(field => {
-      //   if (field.originName === '图层1') {
-      //     id = field.id;
-      //   }
-      // });
       let id = this.chart.data.fields[0].id
       const linkageParam = {
         option: 'linkage',
@@ -101,7 +92,6 @@ export default {
       return this.obj.filter || {}
     },
     trackMenu() {
-      console.log('trackMenu_', this.obj.trackMenu)
       return this.obj.trackMenu || ['drill']
     },
     searchCount() {
@@ -115,13 +105,10 @@ export default {
   watch: {
     active: {
       handler(newVal, oldVla) {
-        console.log('this.active', JSON.stringify(this.active))
       }
     },
     chart: {
       handler(newVal, oldVal) {
-        console.log('this.obj_buttonfilter', this.obj)
-        console.log('this.chart_buttonfilter', JSON.stringify(this.chart))
         if (this.chart) {
           const val = this.chart.data.x[0];
           this.buttonValue = val
