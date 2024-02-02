@@ -10,7 +10,7 @@ export default {
     // 显示哪些管线
     showPipeLayer: {
       type: Array,
-      default: ['HP']
+      default: []
     },
     // 轨迹
     // pathSimplifier: {
@@ -41,8 +41,6 @@ export default {
       map: null,
       // 高压管线对象
       pipeHp: null,
-      // 中压管线对象
-      pipeMp: null,
       // 轨迹对象
       simplifier: null,
       // 当前屏幕尺寸
@@ -57,18 +55,6 @@ export default {
     }
   },
   methods: {
-    // 将地图动态缩放回原始大小
-    // resize() {
-    //   this.pageWidth = document.documentElement.clientWidth;
-    //   const mapNode = document.getElementById('mymap');
-    //
-    //   let scale = 1;
-    //   scale = this.pageWidth / 5760;
-    //
-    //   console.warn('已检测到大小变化，已动态调整地图大小，当前缩放：', scale)
-    //
-    //   mapNode.style.transform = `scale(${1 / scale})`;
-    // },
     // 初始化地图
     initMap() {
       this.map = new AMap.Map('mymap', {
@@ -76,49 +62,33 @@ export default {
         zoom: 13,
         showBuildingBlock: false,
         center: [111.01, 35.03],
-        // mapStyle: 'amap://styles/dfb4b8d0a013071e535e04f4eaf96ce4',
         mapStyle: 'amap://styles/3356249ed35bc7ebc6c673c57461fc86',
         showLabel: true,
       });
-      console.warn('map123', this.map)
       this.map.on("click", (e) => {
         this.$emit("map-click", e);
       });
     },
     // 初始化管线
     initPipe() {
+      console.log('initpipe')
       this.pipeHp = new AMap.TileLayer.WMS({
-        url: "http://10.10.90.191:8787/geoserver/qinhua/wms",
+        url: "http://192.168.50.4:8077/geoserver/yuncheng/wms",
         blend: false,
         tileSize: 512,
         zIndex: 999999,
         visible: true,
         zooms: [0, 20],
         params: {
-          LAYERS: "qinhua:HP",
-          VERSION: "1.1.0",
+          LAYERS: "yuncheng:yuncheng",
+          VERSION: "1.1.1",
           FORMAT: "image/png",
-          SRS: "EPSG:3857",
-        },
-      });
-      this.pipeMp = new AMap.TileLayer.WMS({
-        url: "http://10.10.90.191:8787/geoserver/qinhua/wms",
-        blend: false,
-        tileSize: 512,
-        zIndex: 999999,
-        visible: true,
-        zooms: [0, 20],
-        params: {
-          LAYERS: "qinhua:MP",
-          VERSION: "1.1.0",
-          FORMAT: "image/png",
-          SRS: "EPSG:3857",
+          SRS: "EPSG:2382",
         },
       });
       this.pipeHp.setMap(this.map)
-      this.pipeMp.setMap(this.map)
       this.pipeHp.hide();
-      this.pipeMp.hide();
+      // this.pipeHp.show();
     },
     // 创建标记点
     createMarkers() {
@@ -138,12 +108,13 @@ export default {
           let markerItem = this.markerList[i];
           reverseMarkerList.push(markerItem);
         }
-        console.log('reverseMarkerList_', reverseMarkerList)
         reverseMarkerList.forEach(position => {
           if (position.isShow) {
             let marker = new AMap.Marker({
               position: position.position,
               title: position.title,
+              text: position.text,
+              deviceId: position.deviceId,
               icon: '//webapi.amap.com/images/0.png',
               content: '<div class="marker bg-marker' + position.type + ' ' + position.icon + '"><div class="text">' + position.text + '</div></div>',
               offset: new AMap.Pixel(0, 0),
@@ -198,117 +169,10 @@ export default {
     }
   },
   mounted() {
-    console.log('bmap_mounted')
     let _this = this;
     this.initMap();
-    // 缩放回原始大小
-    // this.resize();
-    // // 绑定事件，根据屏幕比例，重新定义大小
-    // window.addEventListener('resize', this.resize)
     this.initPipe();
-    // 根据默认值来初始化管线显示
-    for (let i = 0; i < this.showPipeLayer.length; i++) {
-      let temp = this.showPipeLayer[i];
-      if (temp === 'HP') {
-        this.pipeHp.show();
-      }
-      if (temp === 'MP') {
-        this.pipeMp.show();
-      }
-    }
     this.createMarkers()
-    // this.initBoarder()
-    // this.initOtherCompanyBoarder()
-    // this.createCoordinatesOfInspectors()
-    // 轨迹展示初始化
-    // AMapUI.loadUI(["misc/PathSimplifier"], function(PathSimplifier) {
-    //   if(!PathSimplifier.supportCanvas) {
-    //     alert("当前环境不支持轨迹展示！");
-    //     return;
-    //   }
-    //创建组件实例
-    // _this.simplifier = new PathSimplifier({
-    //   zIndex: 103,
-    //   map: _this.map, //所属的地图实例
-    //   autoSetFitView: false,
-    //   getPath: function(pathData, pathIndex) {
-    //     //返回轨迹数据中的节点坐标信息，[AMap.LngLat, AMap.LngLat...] 或者 [[lng|number,lat|number],...]
-    //     return pathData.path;
-    //   },
-    //   getHoverTitle: function(pathData, pathIndex, pointIndex) {
-    //     //返回鼠标悬停时显示的信息
-    //     if(pointIndex >= 0) {
-    //       //鼠标悬停在某个轨迹节点上
-    //       return (
-    //         pathData.name +
-    //         "，点:" +
-    //         (pointIndex + 1) +
-    //         "/" +
-    //         pathData.path.length
-    //       );
-    //     }
-    //     //鼠标悬停在节点之间的连线上
-    //     return pathData.name + "，点数量" + pathData.path.length;
-    //   },
-    //   renderOptions: {
-    //     // 轨迹线样式
-    //     pathLineStyle: {
-    //       strokeStyle: "#52C4FF",
-    //       lineWidth: 5,
-    //       borderStyle: "#52C4FF",
-    //       borderWidth: 0,
-    //       dirArrowStyle: true,
-    //     },
-    //     // 轨迹线悬停样式
-    //     pathLineHoverStyle: {
-    //       strokeStyle: "#52C4FF",
-    //       lineWidth: 8,
-    //       borderStyle: "#52C4FF",
-    //       borderWidth: 0,
-    //       dirArrowStyle: true,
-    //     },
-    //     // 轨迹线选中样式
-    //     pathLineSelectedStyle: {
-    //       strokeStyle: "#52C4FF",
-    //       lineWidth: 5,
-    //       borderStyle: "#52C4FF",
-    //       borderWidth: 0,
-    //       dirArrowStyle: true,
-    //     },
-    //     // 起点样式
-    //     startPointStyle: {
-    //       radius: 0,
-    //     },
-    //     // 终点样式
-    //     endPointStyle: {
-    //       radius: 0,
-    //     },
-    //     // 显示文字样式
-    //     hoverTitleStyle: {
-    //       classNames: "path-simplifier-title",
-    //     },
-    //     // 巡航器样式
-    //     // pathNavigatorStyle: {
-    //     //   width: 120,
-    //     //   height: 200,
-    //     //   autoRotate: false,
-    //     //   content: PathSimplifier.Render.Canvas.getImageContent(
-    //     //     './public/巡检.png',
-    //     //     onload,
-    //     //     onerror
-    //     //   ),
-    //     //   // 经过路线的样式
-    //     //   pathLinePassedStyle: {
-    //     //     strokeStyle: "#00fff6",
-    //     //     lineWidth: 5,
-    //     //     borderStyle: "#52C4FF",
-    //     //     borderWidth: 0,
-    //     //     dirArrowStyle: true,
-    //     //   },
-    //     // },
-    //   },
-    // });
-    // });
   },
   created() {
   },
@@ -316,51 +180,14 @@ export default {
     // 监控展示哪些管线的数组
     showPipeLayer: {
       handler(newVal) {
-        this.pipeHp.hide();
-        this.pipeMp.hide();
-        for (let i = 0; i < newVal.length; i++) {
-          let temp = newVal[i];
-          if (temp === 'HP') {
-            this.pipeHp.show();
-          }
-          if (temp === 'MP') {
-            this.pipeMp.show();
-          }
+        if(newVal.length > 0) {
+          this.pipeHp.show();
+        } else {
+          this.pipeHp.hide();
         }
       },
       deep: true
     },
-    // 轨迹
-    // pathSimplifier: {
-    //   handler(newVal) {
-    //     this.simplifier.clearPathNavigators();
-    //     if(newVal.length <= 0) {
-    //       this.simplifier.setData([]);
-    //       return
-    //     }
-    //     this.simplifier.setData(newVal);
-    //     newVal.forEach((temp, index) => {
-    //       this.simplifier.toggleTopOfPath(index, true);
-    //       if(temp.range) {
-    //         // 创建一个巡航器
-    //         let pathNavigator = this.simplifier.createPathNavigator(index, {
-    //           // 循环播放
-    //           loop: false,
-    //           // 巡航速度，单位 千米/小时。默认 1000
-    //           speed: 1000,
-    //           // 巡航起始、截止索引
-    //           range: temp.range,
-    //         });
-    //         pathNavigator.start();
-    //       }
-    //     });
-    //     // this.map.setZoom(14)
-    //     // this.simplifier.setFitView(-1)
-    //     this.map.setZoomAndCenter(12, newVal[0].path[0]);
-    //   },
-    //   deep: true
-    // },
-    // 标记点
     markerList: {
       handler(newVal) {
         if (this.infoWindow !== null) {
@@ -409,119 +236,37 @@ export default {
   }
 
   .marker {
-    // width: 236px;
-    height: 36px;
+    width: 220px;
+    height: 60px;
     color: #fff;
     display: flex;
     white-space: nowrap;
-    padding-left: 28px;
     align-items: center;
     background-size: 36px;
     background-repeat: no-repeat;
     background-position: left center;
-
     .text {
-      //height: 16px;
-      //display: flex;
-      //align-items: center;
-      //padding: 0 6px;
-      //line-height: 32px;
-      //font-size: 10px;
-      //font-family: medium;
-      //background-color: rgba(0, 0, 0, .26);
+      margin-left: 70px;
+      margin-bottom: 20px;
+      font-size: 20px;
     }
   }
 
   // 首页分公司
   .bg-marker6 {
-    width: 220px;
-    height: 60px;
     background-image: url("../../../assets/yuncheng/组3248@2x.png");
     background-size: 100% 100%;
-
-    .text {
-      transform: translate(120%, -40%);
-      font-size: 20px;
-    }
   }
 
   .bg-marker1 {
-    width: 220px;
-    height: 60px;
     background-image: url("../../../assets/yuncheng/组4019@2x.png");
-    background-size: 100% 100%;
-
-    .text {
-      transform: translate(120%, -40%);
-      font-size: 20px;
-    }
+    background-size: 100% 100%
   }
 
   .bg-marker2 {
-    width: 220px;
-    height: 60px;
     background-image: url("../../../assets/yuncheng/组4085@2x.png");
     background-size: 100% 100%;
-
-    .text {
-      transform: translate(120%, -40%);
-      font-size: 20px;
-    }
   }
-
-  //// 密闭空间报警
-  //.bg-marker7 {
-  //  background-image: url("../../../assets/切图/运行/巡检页面/组3598.png");
-  //
-  //  .text {
-  //    display: none;
-  //  }
-  //}
-  //
-  //// 密闭空间正常
-  //.bg-marker71 {
-  //  background-image: url("../../../assets/切图/运行/巡检页面/组39461.png");
-  //
-  //  .text {
-  //    display: none;
-  //  }
-  //}
-  //
-  //// 密闭空间离线
-  //.bg-marker72 {
-  //  background-image: url("../../../assets/切图/运行/巡检页面/组39462.png");
-  //
-  //  .text {
-  //    display: none;
-  //  }
-  //}
-  //
-  //// 泄露空间报警
-  //.bg-marker8 {
-  //  background-image: url("../../../assets/切图/运行/巡检页面/组3288.png");
-  //
-  //  .text {
-  //    display: none;
-  //  }
-  //}
-  //
-  //// 泄露空间报警正常
-  //.bg-marker81 {
-  //  background-image: url("../../../assets/切图/运行/巡检页面/组3289.png");
-  //
-  //  .text {
-  //    display: none;
-  //  }
-  //}
-  //
-  //// 泄露空间报警离线
-  //.bg-marker82 {
-  //  background-image: url("../../../assets/切图/运行/巡检页面/组32892.png");
-  //
-  //  .text {
-  //    display: none;
-  //  }
-  //}
 
 }
 </style>

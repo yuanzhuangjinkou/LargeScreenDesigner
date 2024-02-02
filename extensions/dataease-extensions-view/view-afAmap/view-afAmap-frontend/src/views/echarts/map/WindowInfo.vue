@@ -2,14 +2,12 @@
   <div id="homeWindowInfo" :class="backgroundImg">
 
     <div class="test">
-      <h1 class="title">{{ this.info.name }}</h1>
+      <h1 class="title">{{ this.info.text }}</h1>
       <span class="span-test">检测时间: {{ currentDateTime }}</span>
       <br>
-      <span class="span-test">检测指标: {{  }} </span>
+      <span class="span-test">检测指标: {{ this.info.value }} </span>
       <br>
-      <span class="span-test">检测指标: {{  }}</span>
-      <br>
-      <span class="span-test">检测指标: {{  }}</span>
+      <span class="span-test">报警状态: {{ this.info.status }}</span>
     </div>
 
   </div>
@@ -34,12 +32,10 @@ export default {
       handler(newVal) {
         let n = Math.floor(Math.random() * 2 + 1)
         console.log('>>> WindowsInfo --> ', newVal, n)
-        if(newVal.name === '场站')
+        if(newVal.status === '未报警')
           this.backgroundImg = 'backgroundImg_1'
-        else if(newVal.name === '调压箱')
-          this.backgroundImg = 'backgroundImg_2'
         else
-          this.backgroundImg = 'backgroundImg_' + n;
+          this.backgroundImg = 'backgroundImg_2'
       },
       deep: true
     }
@@ -71,8 +67,8 @@ export default {
   background-image: url('../../../assets/yuncheng/组4031@2x.png');
 }
 #homeWindowInfo {
-  width: 430px;
-  height: 300px;
+  width: 400px;
+  height: 380px;
 
   background-size: contain;
   background-repeat: no-repeat; // 确保背景图像不重复
@@ -84,16 +80,16 @@ export default {
     padding-top: 6px;
 
     .title {
-      font-size: 30px;
+      font-size: 28px;
       color: #FFFFFF;
-      margin-top: 30px;
-      margin-left: 30px;
+      margin-top: 70px;
+      margin-left: 22px;
     }
 
     .span-test {
       //width: 521px;
       //height: 9px;
-      font-size: 28px;
+      font-size: 25px;
       //font-weight: 400;
       color: #FFFFFF;
       margin-left: 30px;
