@@ -48,9 +48,9 @@ export default {
       markerList: [
         {position: [110.97, 35.05], type: 1, title: '场站', text: '场站', isShow: true},
         // {position: [111.04,35.06], type: 2, title: '调压箱', text: '调压箱', isShow: false},
-        {position: [110.98, 35.07], type: 6, title: '分输站', text: '分输站', isShow: false},
+        // {position: [110.98, 35.07], type: 6, title: '分输站', text: '分输站', isShow: false},
         {position: [111.02, 35.03], type: 6, title: '营业厅', text: '营业厅', isShow: false},
-        {position: [111.02, 35.03], type: 6, title: '气源点', text: '气源点', isShow: false},
+        // {position: [111.02, 35.03], type: 6, title: '气源点', text: '气源点', isShow: false},
         {position: [111.02, 35.03], type: 6, title: '加气站', text: '加气站', isShow: false},
       ],
       infoWindow: {
