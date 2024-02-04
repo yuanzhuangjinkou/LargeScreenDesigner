@@ -73,7 +73,7 @@ export default {
     initPipe() {
       console.log('initpipe')
       this.pipeHp = new AMap.TileLayer.WMS({
-        url: "http://192.168.50.4:8077/geoserver/yuncheng/wms",
+        url: "http://120.46.92.69:8765/geoserver/yuncheng/wms",
         blend: false,
         tileSize: 512,
         zIndex: 999999,
