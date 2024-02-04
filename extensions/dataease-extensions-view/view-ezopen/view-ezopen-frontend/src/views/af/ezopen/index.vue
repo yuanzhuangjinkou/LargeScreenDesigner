@@ -1,6 +1,7 @@
 <template>
-<!--  <div class="div">-->
-  <div style="position:relative" class="div">
+  <!--  <div class="div">-->
+  <!--  <div style="position:relative" class="div">-->
+  <div style="display: flex;position:relative" class="chart-class">
     <view-track-bar
       ref="viewTrack"
       :track-menu="trackMenu"
@@ -8,9 +9,17 @@
       :style="trackBarStyleTime"
       @trackClick="trackClick"
     />
-      <button class="hand-cursor" @click="showModal">
-          111
-      </button>
+    <iframe
+      class="ezopen"
+      :src=url
+      :style="ezStyle"
+      id="ysOpenDevice1"
+      allowfullscreen
+    >
+    </iframe>
+    <button class="hand-cursor" @click="showModal" style="position: absolute; top: 10px; right: 10px;">
+      111
+    </button>
     <a-modal
       :width="width"
       :visible="visible"
@@ -18,7 +27,7 @@
       @ok="handleOk"
       @cancel="handleCancel"
     >
-<!--      现在设置iframe的-->
+      <!--      现在设置iframe的-->
       <iframe
         :src=url
         :style="ezStyle"
@@ -103,7 +112,7 @@ export default {
     },
     add50px(value) {
       // 去除单位部分
-      if(value == null)
+      if (value == null)
         return '600px'
       const numString = value.replace('px', '');
 
@@ -179,29 +188,53 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.chart-class {
+  height: 100%;
+  width: 100%;
+  //background-color: red;
+  margin: 0px;
+  padding: 0px;
+}
+
 @font-face {
   font-family: 'hanziti';
   src: url('../../../utils/优设标题黑.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
+
 .div {
   //height: 30px;
   //padding: 10px;
   height: 100%;
   width: 100%;
 }
-.ddd {
-  //background-color: pink;
-}
-.hand-cursor {
-  color: transparent;
-  //z-index: -9999;
-  background-color: transparent;
-  border: 0;
+
+.ezopen {
   height: 100%;
   width: 100%;
-  cursor: pointer;
+}
+
+.hand-cursor {
+
+  background-image: url('../../../assets/放大窗口.png');
+
+  background-size: 100% 100%; /* 控制背景图片的尺寸适应按钮大小 */
+  //width: 150px; /* 设置按钮宽度 */
+  //height: 50px; /* 设置按钮高度 */
+  border: none; /* 移除按钮边框 */
+  color: transparent; /* 设置文字颜色 */
+  font-size: 16px; /* 设置文字大小 */
+  cursor: pointer; /* 设置鼠标悬停样式为手型 */
+
+  //color: transparent;
+  ////z-index: -9999;
+  ////background-color: transparent;
+  //background-image: url('../../../assets/放大.png');
+  ////border: 0;
+  ////height: 100%;
+  ////width: 100%;
+  //cursor: pointer;
 }
 
 .span {
