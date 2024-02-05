@@ -159,10 +159,12 @@ export default {
       // }
     },
     stationClick(val) {
-      if(val[0] === '管线')
+      if(val[0] === '管线') {
         this.showPipeLayer = ['HP']
-      else
+      }
+      else {
         this.showPipeLayer = []
+      }
       this.markerList = this.markerList.map(obj => {
         if (obj.title === val[0]) {
           return {...obj, isShow: true};
@@ -254,6 +256,7 @@ export default {
     },
     chart: {
       async handler(newVal, oldVal) {
+        // console.log('afamap.chart', this.chart)
         if (this.chart) {
           const val = this.chart.data.x;
           await this.initData()
@@ -261,7 +264,7 @@ export default {
         }
       },
       deep: true,
-      immediate: true
+      // immediate: true
     }
   },
 }

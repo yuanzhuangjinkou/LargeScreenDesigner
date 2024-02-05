@@ -49,9 +49,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         target: 'http://127.0.0.1:9000',
         changeOrigin: true,
       },
+      // '/logic': {
+      //   target: 'http://127.0.0.1:9009/',
+      //   changeOrigin: true,
+      // },
       '/logic': {
-        target: 'http://127.0.0.1:9009/',
-        changeOrigin: true,
+        target: 'http://120.46.92.69:8765/api/dashboard',
+        changeOrigin: false
       },
     },
     quiet: true, // necessary for FriendlyErrorsPlugin
