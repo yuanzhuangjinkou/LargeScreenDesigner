@@ -10,6 +10,7 @@
       @trackClick="trackClick"
     />
     <iframe
+      v-if="!visible"
       class="ezopen"
       :src=url
       :style="ezStyle"
@@ -27,8 +28,8 @@
       @ok="handleOk"
       @cancel="handleCancel"
     >
-      <!--      现在设置iframe的-->
       <iframe
+        v-if="visible"
         :src=url
         :style="ezStyle"
         id="ysOpenDevice"

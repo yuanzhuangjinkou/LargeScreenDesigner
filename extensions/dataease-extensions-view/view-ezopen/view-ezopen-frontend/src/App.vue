@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-    <dynamicDataTable :obj="this.data"/>
+<!--    <dynamicDataTable :obj="this.data"/>-->
+    <test/>
   </div>
 </template>
 
 <script>
 import DynamicDataTable from "./views/af/ezopen";
+import test from "./views/af/test/test"
 
 export default {
   name: 'App',
@@ -15,7 +17,8 @@ export default {
     }
   },
   components: {
-    DynamicDataTable
+    DynamicDataTable,
+    test
   }
 }
 </script>
