@@ -3,11 +3,15 @@
 
     <div class="test">
       <h1 class="title">{{ this.info.text }}</h1>
-      <span class="span-test">检测时间: {{ currentDateTime }}</span>
-      <br>
-      <span class="span-test">检测指标: {{ this.info.value }} </span>
-      <br>
-      <span class="span-test">报警状态: {{ this.info.status }}</span>
+
+<!--     就是所有的key 都保持在一条竖直线上   -->
+      <div v-for="(value, key) in data" :key="key" class="span-test" v-if="value != null"><span class="key" >{{ key }}:</span> {{ value }}</div>
+
+<!--      <span class="span-test">检测时间: {{ currentDateTime }}</span>-->
+<!--      <br>-->
+<!--      <span class="span-test">检测指标: {{ this.info.value }} </span>-->
+<!--      <br>-->
+<!--      <span class="span-test">报警状态: {{ this.info.status }}</span>-->
     </div>
 
   </div>
@@ -23,19 +27,24 @@ export default {
   data() {
     return {
       currentDateTime: '',
-      backgroundImg: 'backgroundImg_1'
+      backgroundImg: 'backgroundImg_1',
+      data: {}
     }
   },
   computed: {},
   watch: {
     info: {
       handler(newVal) {
-        let n = Math.floor(Math.random() * 2 + 1)
-        console.log('>>> WindowsInfo --> ', newVal, n)
-        if(newVal.status === '未报警')
-          this.backgroundImg = 'backgroundImg_1'
-        else
-          this.backgroundImg = 'backgroundImg_2'
+        this.data = newVal.data
+        console.log('this.data: ', JSON.stringify(this.data))
+        if (title === '调压箱') {
+          if (newVal.data.报警状态 === '未报警')
+            this.backgroundImg = 'backgroundImg_1'
+          else
+            this.backgroundImg = 'backgroundImg_2'
+        } else {
+
+        }
       },
       deep: true
     }
@@ -63,12 +72,19 @@ export default {
 .backgroundImg_1 {
   background-image: url('../../../assets/yuncheng/组4032@2x.png');
 }
+
 .backgroundImg_2 {
   background-image: url('../../../assets/yuncheng/组4031@2x.png');
 }
+
+.key {
+  display: inline-block;
+  width: 110px; /* 根据您的需要调整宽度 */
+}
+
 #homeWindowInfo {
-  width: 400px;
-  height: 380px;
+  width: 380px;
+  height: 350px;
 
   background-size: contain;
   background-repeat: no-repeat; // 确保背景图像不重复

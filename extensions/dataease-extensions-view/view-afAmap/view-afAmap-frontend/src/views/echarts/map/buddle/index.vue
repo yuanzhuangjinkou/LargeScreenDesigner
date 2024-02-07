@@ -46,7 +46,9 @@ export default {
       // 分公司范围中心和同行公司标记点
       // position: 坐标, type: 展示图片样式, title: 分类, text: 名称, isShow: 是否展示
       markerList: [
-        {position: [110.97, 35.05], type: 1, title: '场站', text: '场站', isShow: true},
+        {position: [110.97, 35.05], type: 1, title: '场站', text: '永济民生门站', isShow: true},
+        {position: [111.00, 35.08], type: 1, title: '场站', text: '运城民生北门站', isShow: true},
+        {position: [111.01, 35.06], type: 1, title: '场站', text: '运城民生东门站', isShow: true},
         // {position: [111.04,35.06], type: 2, title: '调压箱', text: '调压箱', isShow: false},
         // {position: [110.98, 35.07], type: 6, title: '分输站', text: '分输站', isShow: false},
         {position: [111.02, 35.03], type: 6, title: '营业厅', text: '营业厅', isShow: false},
@@ -61,7 +63,7 @@ export default {
           closeWhenClickMap: false
         }),
         info: {
-          branchName: '分公司',
+          branchName: '',
           residentsCount: 0,
           nonResidentCount: 0,
           pipelineLength: 0
@@ -114,15 +116,36 @@ export default {
       let text = e.target.De.text
       let deviceId = e.target.De.deviceId
 
-      await axios.post('/logic/deviceApi', {"deviceId": deviceId})
-        .then(res => {
-          this.infoWindow.info =
-            {
-              'text': res.data.name,
-              'status': res.data.status,
-              'value': res.data.value,
-            };
-        })
+      if(title === '调压箱') {
+        // 展示数据: 名称, 时间, 状态,
+        await axios.post('/logic/deviceApi', {"deviceId": deviceId})
+          .then(res => {
+            this.infoWindow.info =
+              {
+                'title': title,
+                'text': res.data.name,
+                'data': {
+                  '报警状态': res.data.status,
+                  '检测指标': res.data.value
+                }
+              };
+          })
+      } else if(title === '场站') {
+        await axios.post('/logic/stationDataApi', {"stationName": text})
+          .then(res => {
+            console.log('res: ', res)
+            this.infoWindow.info =
+              {
+                'title': title,
+                'text': res.data[0].name,
+                'data': {
+                  '温度': res.data[0].temperature,
+                  '压力': res.data[0].pressure,
+                  '累计流量': res.data[0].gkljll
+                }
+              };
+          })
+      }
 
       // 遍历标记点隐藏被点击的
       this.markerList.forEach(item => item.isShow = item.title === title)
@@ -264,7 +287,7 @@ export default {
         }
       },
       deep: true,
-      // immediate: true
+      immediate: true
     }
   },
 }
