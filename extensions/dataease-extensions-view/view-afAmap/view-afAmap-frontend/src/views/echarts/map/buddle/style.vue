@@ -1,101 +1,56 @@
 <template>
-<!--  <div-->
-<!--    style="-->
-<!--      overflow: auto;-->
-<!--      border-right: 1px solid #e6e6e6;-->
-<!--      height: 100%;-->
-<!--      width: 100%;-->
-<!--    "-->
-<!--    class="attr-style theme-border-class"-->
-<!--  >-->
-<!--    <el-row>-->
-<!--      <span class="padding-lr">{{ $t("chart.shape_attr") }}</span>-->
-<!--      <el-collapse v-model="attrActiveNames" class="style-collapse">-->
-<!--        <el-collapse-item name="color" :title="$t('chart.color')">-->
-<!--          <color-selector-->
-<!--            :param="param"-->
-<!--            class="attr-selector"-->
-<!--            :chart="chart"-->
-<!--            @onColorChange="onColorChange"-->
-<!--          />-->
-<!--        </el-collapse-item>-->
-
-<!--        <el-collapse-item name="label" :title="$t('chart.label')">-->
-<!--          <label-selector-->
-<!--            :param="param"-->
-<!--            class="attr-selector"-->
-<!--            :chart="chart"-->
-<!--            @onLabelChange="onLabelChange"-->
-<!--          />-->
-<!--        </el-collapse-item>-->
-
-<!--        <el-collapse-item name="tooltip" :title="$t('chart.tooltip')">-->
-<!--          <tooltip-selector-->
-<!--            :param="param"-->
-<!--            class="attr-selector"-->
-<!--            :chart="chart"-->
-<!--            @onTooltipChange="onTooltipChange"-->
-<!--          />-->
-<!--        </el-collapse-item>-->
-
-<!--        <el-collapse-item name="suspension" :title="$t('chart.suspension')">-->
-<!--          <suspension-selector-->
-<!--            :param="param"-->
-<!--            class="attr-selector"-->
-<!--            :chart="chart"-->
-<!--            @onSuspensionChange="onSuspensionChange"-->
-<!--          />-->
-<!--        </el-collapse-item>-->
-<!--      </el-collapse>-->
-<!--    </el-row>-->
-
-<!--    <el-row>-->
-<!--      <span class="padding-lr">{{ $t("chart.module_style") }}</span>-->
-<!--      <el-collapse v-model="styleActiveNames" class="style-collapse">-->
-<!--        <el-collapse-item-->
-<!--          v-show="view.type"-->
-<!--          name="title"-->
-<!--          :title="$t('chart.title')"-->
-<!--        >-->
-<!--          <title-selector-->
-<!--            :param="param"-->
-<!--            class="attr-selector"-->
-<!--            :chart="chart"-->
-<!--            @onTextChange="onTextChange"-->
-<!--          />-->
-<!--        </el-collapse-item>-->
-<!--      </el-collapse>-->
-<!--    </el-row>-->
-<!--  </div>-->
+  <div
+    style="
+      overflow: auto;
+      border-right: 1px solid #e6e6e6;
+      height: 100%;
+      width: 100%;
+    "
+    class="attr-style theme-border-class"
+  >
+    <el-form ref="form" :model="attrStyle" label-width="80px">
+      <!--一级弹窗在 map 中-->
+<!--      <el-form-item label="一级弹窗宽">-->
+<!--        <el-input v-model="attrStyle.oneWidth"></el-input>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="一级弹窗高">-->
+<!--        <el-input v-model="attrStyle.oneHeight"></el-input>-->
+<!--      </el-form-item>-->
+      <!--二级弹窗在 windowinfo 中-->
+      <el-form-item label="windowinfo弹窗宽">
+        <el-input v-model="attrStyle.twoWidth"></el-input>
+      </el-form-item>
+      <el-form-item label="windowinfo弹窗高">
+        <el-input v-model="attrStyle.twoHeight"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="calcStyle">确认</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
-// import ColorSelector from "../../../../components/selector/ColorSelector";
-// import LabelSelector from "../../../../components/selector/LabelSelector";
-// import TitleSelector from "../../../../components/selector/TitleSelector";
-// import TooltipSelector from "../../../../components/selector/TooltipSelector";
-// import SuspensionSelector from "../../../../components/selector/SuspensionSelector";
+import {STYLE_PARAM} from '../../../../utils/style'
+
 export default {
-  components: {
-    // ColorSelector,
-    // LabelSelector,
-    // TitleSelector,
-    // TooltipSelector,
-    // SuspensionSelector,
-  },
+  components: {},
   data() {
     return {
-      attrActiveNames: [],
-      styleActiveNames: [],
+      attrStyle: JSON.parse(JSON.stringify(STYLE_PARAM)),
     };
   },
   props: {
     obj: {
       type: Object,
-      default: () => {},
+      default: () => {
+      },
     },
   },
-
+  created() {
+    console.log('style_style_created: ', this.obj)
+    this.attrStyle = JSON.parse(this.obj.chart.customAttr)
+  },
   computed: {
     param() {
       return this.obj.param;
@@ -108,33 +63,9 @@ export default {
     },
   },
   methods: {
-    onColorChange(val) {
-      this.view.customAttr.color = val;
-      this.calcStyle();
-    },
-    onLabelChange(val) {
-      this.view.customAttr.label = val;
-      this.calcStyle();
-    },
-
-    onTooltipChange(val) {
-      this.view.customAttr.tooltip = val;
-      this.calcStyle();
-    },
-    onSuspensionChange(val) {
-      this.view.customAttr.suspension = val;
-      this.calcStyle();
-    },
-    onTextChange(val) {
-      this.view.customStyle.text = val;
-      this.view.title = val.title;
-      this.calcStyle();
-    },
-    onChangeBackgroundForm(val) {
-      this.view.customStyle.background = val;
-      this.calcStyle();
-    },
     calcStyle() {
+      this.view.customAttr = this.attrStyle
+      console.log('afamap_attrStyle', JSON.stringify(this.attrStyle))
       this.$emit("plugin-call-back", {
         eventName: "plugins-calc-style",
         eventParam: this.view,
@@ -148,12 +79,15 @@ export default {
 .padding-lr {
   padding: 0 6px;
 }
+
 span {
   font-size: 12px;
 }
+
 .el-radio {
   margin: 5px;
 }
+
 .radio-span ::v-deep .el-radio__label {
   margin-left: 2px;
 }

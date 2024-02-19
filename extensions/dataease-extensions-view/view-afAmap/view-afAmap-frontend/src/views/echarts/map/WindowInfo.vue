@@ -1,11 +1,14 @@
 <template>
-  <div id="homeWindowInfo" :class="backgroundImg">
+  <div id="homeWindowInfo" :style="sty" :class="backgroundImg">
 
     <div class="test">
       <h1 class="title">{{ this.info.text }}</h1>
 
 <!--     就是所有的key 都保持在一条竖直线上   -->
-      <div v-for="(value, key) in data" :key="key" class="span-test" v-if="value != null"><span class="key" >{{ key }}:</span> {{ value }}</div>
+      <div v-for="(value, key) in data" :key="key" class="span-test" v-if="value != null">
+        <span class="key" >{{ key }}:</span>
+        {{ value }}
+      </div>
 
 <!--      <span class="span-test">检测时间: {{ currentDateTime }}</span>-->
 <!--      <br>-->
@@ -31,13 +34,20 @@ export default {
       data: {}
     }
   },
-  computed: {},
+  computed: {
+    sty() {
+      return {
+        width: JSON.parse(this.info.customAttr).twoWidth,
+        height: JSON.parse(this.info.customAttr).twoHeight,
+      };
+    },
+  },
+
   watch: {
     info: {
-      handler(newVal) {
+      handler(newVal, oldVal) {
         this.data = newVal.data
-        console.log('this.data: ', JSON.stringify(this.data))
-        if (title === '调压箱') {
+        if (newVal.title === '调压箱') {
           if (newVal.data.报警状态 === '未报警')
             this.backgroundImg = 'backgroundImg_1'
           else
@@ -45,8 +55,11 @@ export default {
         } else {
 
         }
+        // 手动触发sty的重新计算
+        this.$forceUpdate();
       },
-      deep: true
+      deep: true,
+      immediate: true
     }
   },
   methods: {
@@ -83,8 +96,8 @@ export default {
 }
 
 #homeWindowInfo {
-  width: 380px;
-  height: 350px;
+  //width: 380px;
+  //height: 350px;
 
   background-size: contain;
   background-repeat: no-repeat; // 确保背景图像不重复

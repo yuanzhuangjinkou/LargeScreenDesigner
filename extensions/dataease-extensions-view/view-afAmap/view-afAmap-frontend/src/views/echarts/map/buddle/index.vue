@@ -10,7 +10,7 @@
             @marker-click="markerClick"
             @map-click="windowClose"
             @polygon-click="windowClose"
-            :highlight-company-name="highlightCompanyName"
+            :custom-attr="JSON.parse(customAttr)"
       />
     </div>
 
@@ -30,6 +30,7 @@ import WindowInfo from "../WindowInfo.vue";
 import ViewTrackBar from '../../../../components/views/ViewTrackBar'
 import {getNumber} from '../../../../api'
 import axios from "axios";
+import {STYLE_PARAM} from '../../../../utils/style'
 
 export default {
   name: "ChartComponent",
@@ -40,8 +41,8 @@ export default {
   },
   data() {
     return {
+      customAttr: JSON.stringify(STYLE_PARAM),
       // 需要高亮显示的公司名
-      highlightCompanyName: "",
       showPipeLayer: [],
       // 分公司范围中心和同行公司标记点
       // position: 坐标, type: 展示图片样式, title: 分类, text: 名称, isShow: 是否展示
@@ -63,10 +64,12 @@ export default {
           closeWhenClickMap: false
         }),
         info: {
-          branchName: '',
-          residentsCount: 0,
-          nonResidentCount: 0,
-          pipelineLength: 0
+          'title': 'title',
+          'text': 'name',
+          'data': {
+            '检测指标': '123456',
+          },
+          'customAttr': JSON.stringify(STYLE_PARAM),
         },
       },
 
@@ -127,7 +130,8 @@ export default {
                 'data': {
                   '报警状态': res.data.status,
                   '检测指标': res.data.value
-                }
+                },
+                'customAttr': this.customAttr
               };
           })
       } else if(title === '场站') {
@@ -142,7 +146,8 @@ export default {
                   '温度': res.data[0].temperature,
                   '压力': res.data[0].pressure,
                   '累计流量': res.data[0].gkljll
-                }
+                },
+                'customAttr': this.customAttr
               };
           })
       }
@@ -279,11 +284,13 @@ export default {
     },
     chart: {
       async handler(newVal, oldVal) {
-        // console.log('afamap.chart', this.chart)
+        console.log('afamap.chart', JSON.stringify(this.obj))
         if (this.chart) {
+          this.customAttr = this.chart.customAttr
           const val = this.chart.data.x;
           await this.initData()
           this.stationClick(val)
+          this.$forceUpdate();
         }
       },
       deep: true,
