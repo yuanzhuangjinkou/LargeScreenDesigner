@@ -12,8 +12,8 @@
       <span v-for="(item, index) in zhCN" :key="index" :style="titleStyle">{{item}}</span>
     </div>
     <div class="valueClass" v-for="(item, index) in data" :style="valueDivStyle">
-      <span v-for="key in Object.keys(zhCN)" :key="key" :class="getColumnClass(key)" :style="valueStyle">
-        {{ item[key] + value(key)}}
+      <span v-for="(key, ind) in Object.keys(zhCN)" :key="key" :class="getColumnClass(ind)" :style="valueStyle">
+        {{ item[key] }}
       </span>
     </div>
   </div>
@@ -47,17 +47,12 @@ export default {
     this.highlightRows();
   },
   methods: {
-    getColumnClass(key) {
+    getColumnClass(index) {
       // 根据列名判断是否为气体浓度列
-      if (this.zhCN[key] === '气体浓度') {
+      if (index !== 0) {
         return ['gas-concentration'];
       }
       return ['white'];
-    },
-    value(key) {
-      if(this.zhCN[key] === '气体浓度')
-        return ' (ppm)'
-      return ''
     },
     highlightRows() {
       const rows = document.querySelectorAll('.custom-table tbody tr');
@@ -68,8 +63,6 @@ export default {
       });
     },
     trackClick(trackAction) {
-      console.log('trackClick_', trackAction)
-
       let id = null;
       this.chart.data.sourceFields.forEach(field => {
         if (field.originName === 'province') {
@@ -137,8 +130,6 @@ export default {
 
     // 样式计算
     titleStyle() {
-      console.log('计算属性: ', this.chart)
-      console.log('计算属性: ', JSON.parse(this.chart.customAttr))
       return {
         fontSize: JSON.parse(this.chart.customAttr).titleFontSize,
       }
@@ -161,7 +152,6 @@ export default {
     },
     chart: {
       handler(newVal, oldVal) {
-        console.log('alarmList.obj', JSON.stringify(this.obj))
         if (this.chart) {
           this.zhCN = JSON.parse(this.chart.data.x[0].substring(6)).zhCN
           this.data = JSON.parse(this.chart.data.x[0].substring(6)).data
@@ -183,10 +173,9 @@ export default {
   font-style: normal;
 }
 
-
 .table {
   display: flex;
-  margin-bottom: 3px;
+  margin-bottom: 20px;
   margin-top: 15px;
 }
 .table span {
