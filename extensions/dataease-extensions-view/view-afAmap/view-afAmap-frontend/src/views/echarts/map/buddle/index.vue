@@ -184,7 +184,6 @@ export default {
               };
           })
       } else if(title === '营业厅') {
-        console.log('营业厅...')
         this.infoWindow.info =
           {
             'title': title,

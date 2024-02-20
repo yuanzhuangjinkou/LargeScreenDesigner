@@ -48,7 +48,7 @@ export default {
     },
   },
   created() {
-    console.log('style_style_created: ', this.obj)
+    // console.log('style_style_created: ', this.obj)
     this.attrStyle = JSON.parse(this.obj.chart.customAttr)
   },
   computed: {
@@ -65,7 +65,7 @@ export default {
   methods: {
     calcStyle() {
       this.view.customAttr = this.attrStyle
-      console.log('afamap_attrStyle', JSON.stringify(this.attrStyle))
+      // console.log('afamap_attrStyle', JSON.stringify(this.attrStyle))
       this.$emit("plugin-call-back", {
         eventName: "plugins-calc-style",
         eventParam: this.view,
