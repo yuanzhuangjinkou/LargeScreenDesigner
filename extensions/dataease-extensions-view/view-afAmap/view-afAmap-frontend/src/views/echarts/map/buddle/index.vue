@@ -10,6 +10,7 @@
             @marker-click="markerClick"
             @map-click="windowClose"
             @polygon-click="windowClose"
+            ref="bmap"
             :custom-attr="JSON.parse(customAttr)"
       />
     </div>
@@ -52,10 +53,42 @@ export default {
         {position: [111.01, 35.06], type: 1, title: '场站', text: '运城民生东门站', isShow: true},
         // {position: [111.04,35.06], type: 2, title: '调压箱', text: '调压箱', isShow: false},
         // {position: [110.98, 35.07], type: 6, title: '分输站', text: '分输站', isShow: false},
-        {position: [111.02, 35.03], type: 6, title: '营业厅', text: '营业厅', isShow: false},
+        {position: [111.037857, 35.04064], type: 4, title: '营业厅', text: '东城营业厅', isShow: false},
+        {position: [110.972586, 35.059333], type: 4, title: '营业厅', text: '北郊营业厅', isShow: false},
+        {position: [111.03936, 35.108775], type: 4, title: '营业厅', text: '空港营业厅', isShow: false},
+        {position: [111.025518, 35.086082], type: 4, title: '营业厅', text: '禹都营业厅', isShow: false},
+        {position: [110.976367, 35.021284], type: 4, title: '营业厅', text: '西城营业厅', isShow: false},
+        {position: [110.461417, 34.862187], type: 4, title: '营业厅', text: '永济营业厅', isShow: false},
         // {position: [111.02, 35.03], type: 6, title: '气源点', text: '气源点', isShow: false},
-        {position: [111.02, 35.03], type: 6, title: '加气站', text: '加气站', isShow: false},
+        {position: [111.02, 35.03], type: 3, title: '加气站', text: '加气站', isShow: false},
       ],
+      // 营业厅数据
+      service: {
+        "东城营业厅": {
+          "网点地址": "盐湖区周西路东50米中银大厦12楼1203-1室",
+          "网点电话": "0359-2090799",
+        },
+        "北郊营业厅": {
+          "网点地址": "天逸公园南门鑫润宜居一楼门面房",
+          "网点电话": "0359-2185500",
+        },
+        "空港营业厅": {
+          "网点地址": "香港花园对面名人港湾楼下门面房",
+          "网点电话": "0359-2590277 ",
+        },
+        "禹都营业厅": {
+          "网点地址": "经济技术开发区军屯街军屯村口",
+          "网点电话": "0359-3113666",
+        },
+        "西城营业厅": {
+          "网点地址": "圣惠路海光街7号锦园小区斜对面小院内",
+          "网点电话": "0359-2085229",
+        },
+        "永济营业厅": {
+          "网点地址": "山西省运城市永济市富强东街25号",
+          "网点电话": "0359-8063777",
+        },
+      },
       infoWindow: {
         window: new AMap.InfoWindow({
           isCustom: true,
@@ -137,7 +170,7 @@ export default {
       } else if(title === '场站') {
         await axios.post('/logic/stationDataApi', {"stationName": text})
           .then(res => {
-            console.log('res: ', res)
+            // console.log('res: ', res)
             this.infoWindow.info =
               {
                 'title': title,
@@ -150,6 +183,15 @@ export default {
                 'customAttr': this.customAttr
               };
           })
+      } else if(title === '营业厅') {
+        console.log('营业厅...')
+        this.infoWindow.info =
+          {
+            'title': title,
+            'text': text,
+            'data': this.service[text],
+            'customAttr': this.customAttr
+          };
       }
 
       // 遍历标记点隐藏被点击的
@@ -284,13 +326,17 @@ export default {
     },
     chart: {
       async handler(newVal, oldVal) {
-        console.log('afamap.chart', JSON.stringify(this.obj))
         if (this.chart) {
           this.customAttr = this.chart.customAttr
           const val = this.chart.data.x;
-          await this.initData()
+          if(val[0] === '调压箱') {
+            await this.initData()
+          }
           this.stationClick(val)
-          this.$forceUpdate();
+          // this.$forceUpdate();
+        }
+        if (this.$refs.bmap) {
+          this.$refs.bmap.setCenter();
         }
       },
       deep: true,

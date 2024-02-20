@@ -55,6 +55,9 @@ export default {
     }
   },
   methods: {
+    setCenter() {
+      this.map.setCenter([111.01, 35.03])
+    },
     // 初始化地图
     initMap() {
       this.map = new AMap.Map('mymap', {
@@ -71,7 +74,7 @@ export default {
     },
     // 初始化管线
     initPipe() {
-      console.log('initpipe')
+      // console.log('initpipe')
       this.pipeHp = new AMap.TileLayer.WMS({
         url: "http://120.46.92.69:3366/geoserver/yuncheng/wms",
         blend: false,
@@ -252,17 +255,25 @@ export default {
     }
   }
 
-  // 首页分公司
-  .bg-marker6 {
-    background-image: url("../../../assets/yuncheng/组3248@2x.png");
+  // 营业厅
+  .bg-marker4 {
+    background-image: url("../../../assets/yuncheng/组6741@2x.png");
     background-size: 100% 100%;
   }
 
+  // 加气站
+  .bg-marker3 {
+    background-image: url("../../../assets/yuncheng/组6742@2x.png");
+    background-size: 100% 100%;
+  }
+
+  // 场站
   .bg-marker1 {
     background-image: url("../../../assets/yuncheng/组4019@2x.png");
     background-size: 100% 100%
   }
 
+  // 调压箱
   .bg-marker2 {
     background-image: url("../../../assets/yuncheng/组4085@2x.png");
     background-size: 100% 100%;

@@ -1,5 +1,6 @@
 <template>
-  <div id="homeWindowInfo" :style="sty" :class="backgroundImg">
+<!--  <div id="homeWindowInfo" :style="sty" :class="backgroundImg">-->
+  <div id="homeWindowInfo" :class="backgroundImg">
 
     <div class="test">
       <h1 class="title">{{ this.info.text }}</h1>
@@ -82,22 +83,14 @@ export default {
 </script>
 
 <style lang="scss">
-.backgroundImg_1 {
-  background-image: url('../../../assets/yuncheng/组4032@2x.png');
-}
-
-.backgroundImg_2 {
-  background-image: url('../../../assets/yuncheng/组4031@2x.png');
-}
-
 .key {
   display: inline-block;
   width: 110px; /* 根据您的需要调整宽度 */
 }
 
 #homeWindowInfo {
-  //width: 380px;
-  //height: 350px;
+  width: 380px;
+  height: 350px;
 
   background-size: contain;
   background-repeat: no-repeat; // 确保背景图像不重复
@@ -106,6 +99,7 @@ export default {
   margin-bottom: -10px;
 
   .test {
+    padding-right: 10px;;
     padding-top: 6px;
 
     .title {
@@ -127,5 +121,12 @@ export default {
   }
 
 
+}
+.backgroundImg_1 {
+  background-image: url('../../../assets/yuncheng/组4032@2x.png');
+}
+
+.backgroundImg_2 {
+  background-image: url('../../../assets/yuncheng/组4031@2x.png');
 }
 </style>
