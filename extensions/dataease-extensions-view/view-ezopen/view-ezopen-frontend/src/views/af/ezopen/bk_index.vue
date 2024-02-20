@@ -1,6 +1,7 @@
 <template>
   <!--  <div class="div">-->
-  <div style="position:relative" class="div">
+  <!--  <div style="position:relative" class="div">-->
+  <div style="display: flex;position:relative" class="chart-class">
     <view-track-bar
       ref="viewTrack"
       :track-menu="trackMenu"
@@ -8,8 +9,17 @@
       :style="trackBarStyleTime"
       @trackClick="trackClick"
     />
-    <button class="hand-cursor" @click="showModal">
-      11111111111
+    <iframe
+      v-if="!visible"
+      class="ezopen"
+      :src=url
+      :style="ezStyle"
+      id="ysOpenDevice1"
+      allowfullscreen
+    >
+    </iframe>
+    <button class="hand-cursor" @click="showModal" style="position: absolute; top: 10px; right: 10px;">
+      111
     </button>
     <a-modal
       :width="width"
@@ -18,9 +28,14 @@
       @ok="handleOk"
       @cancel="handleCancel"
     >
-      <div  v-if="visible" class="video-box" v-for="(video,index) in videoList" :key="index">
-        <video :style="ezStyle" :id="'video'+index" ref="videoElement" controls autoplay muted></video>
-      </div>
+      <iframe
+        v-if="visible"
+        :src=url
+        :style="ezStyle"
+        id="ysOpenDevice"
+        allowfullscreen
+      >
+      </iframe>
     </a-modal>
   </div>
 </template>
@@ -28,7 +43,6 @@
 <script>
 
 import viewTrackBar from '../../../components/views/ViewTrackBar'
-import flvjs from "flv.js";
 
 export default {
   // import vie
@@ -38,64 +52,26 @@ export default {
   },
   data() {
     return {
-      player: null,
-      videoPlayer: null,
-      videoList: [
-        {
-          // src: 'https://rtmp01open.ys7.com:9188/v3/openlive/J96844961_1_2.flv?expire=1739516876&id=680068128723537920&t=74e9aa66edaeefc2a83c0ed93cd21b594860aad04939e1c48229c2c9333251e1&ev=100'
-          src: ''
-        }
-      ],
+      url: '',
       visible: false,
-      width: '760px',
+      confirmLoading: false,
+      width: '100px',
     };
   },
   methods: {
-    playVideo(){
-      this.vloading = true;
-      console.log("videoList", this.videoList)
-      this.videoList.forEach((item,index) => {
-        if (flvjs.isSupported()) {
-          let videoElement = document.getElementById("video" + index);
-          this.player = flvjs.createPlayer({
-            type: "flv", //=> 媒体类型 flv 或 mp4
-            isLive: true, //=> 是否为直播流
-            hasAudio: false, //=> 是否开启声音
-            url: item.src, //=> 视频流地址
-          });
-          this.player.attachMediaElement(videoElement); //=> 绑DOM
-          this.player.load();
-          this.player.play();
-
-        } else {
-          this.$message.error('不支持flv格式视频')
-        }
-        this.vloading = false;
-      })
-    },
-    stopVideos() {
-        if (!this.player) return
-        this.player.pause()
-        this.player.unload()
-        this.player.detachMediaElement()
-        this.player.destroy()
-        this.player = null
-    },
     showModal() {
       this.visible = true;
-      this.$nextTick(() => {
-        this.playVideo();
-      });
     },
     handleOk(e) {
+      this.confirmLoading = true;
       setTimeout(() => {
         this.visible = false;
+        this.confirmLoading = false;
       }, 2000);
     },
     handleCancel(e) {
       console.log('Clicked cancel button');
       this.visible = false;
-      this.stopVideos();
     },
     trackClick(trackAction) {
       console.log('trackClick_', trackAction)
@@ -137,7 +113,7 @@ export default {
     },
     add50px(value) {
       // 去除单位部分
-      if(value == null)
+      if (value == null)
         return '600px'
       const numString = value.replace('px', '');
 
@@ -201,7 +177,7 @@ export default {
       handler(newVal, oldVal) {
         console.log('ezopen_this.chart', JSON.stringify(this.obj))
         if (this.chart) {
-          this.videoList[0].src = this.chart.data.x[0]
+          this.url = this.chart.data.x[0]
           this.$forceUpdate();
         }
       },
@@ -213,30 +189,70 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.chart-class {
+  height: 100%;
+  width: 100%;
+  //background-color: red;
+  margin: 0px;
+  padding: 0px;
+}
+
 @font-face {
   font-family: 'hanziti';
   src: url('../../../utils/优设标题黑.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
+
 .div {
+  //height: 30px;
+  //padding: 10px;
+  height: 100%;
+  width: 100%;
+}
+
+.ezopen {
   height: 100%;
   width: 100%;
 }
 
 .hand-cursor {
+
+  background-image: url('../../../assets/放大窗口.png');
+
+  background-size: 100% 100%; /* 控制背景图片的尺寸适应按钮大小 */
+  //width: 150px; /* 设置按钮宽度 */
+  //height: 50px; /* 设置按钮高度 */
+  border: none; /* 移除按钮边框 */
+  color: transparent; /* 设置文字颜色 */
+  font-size: 16px; /* 设置文字大小 */
+  cursor: pointer; /* 设置鼠标悬停样式为手型 */
+
   //color: transparent;
   ////z-index: -9999;
-  //background-color: transparent;
-  //border: 0;
-  //height: 100%;
-  //width: 100%;
+  ////background-color: transparent;
+  //background-image: url('../../../assets/放大.png');
+  ////border: 0;
+  ////height: 100%;
+  ////width: 100%;
   //cursor: pointer;
 }
 
 .span {
+  //width: 325px;
+  //height: 25px;
+  //font-size: 60px;
   font-family: 'hanziti', sans-serif;
+  //font-weight: 400;
+  //color: #FFEC49;
+  //line-height: 25px;
+  //letter-spacing: 5px;
   -webkit-background-clip: text;
+  //-webkit-text-fill-color: transparent;
+}
+
+.unit {
+  //font-size: 40px;
 }
 
 </style>
