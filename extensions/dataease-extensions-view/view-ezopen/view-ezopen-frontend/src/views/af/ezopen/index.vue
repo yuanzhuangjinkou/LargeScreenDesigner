@@ -225,13 +225,13 @@ export default {
 }
 
 .hand-cursor {
-  //color: transparent;
-  ////z-index: -9999;
-  //background-color: transparent;
-  //border: 0;
-  //height: 100%;
-  //width: 100%;
-  //cursor: pointer;
+  color: transparent;
+  //z-index: -9999;
+  background-color: transparent;
+  border: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
 }
 
 .span {
