@@ -48,7 +48,7 @@ export default {
       // 分公司范围中心和同行公司标记点
       // position: 坐标, type: 展示图片样式, title: 分类, text: 名称, isShow: 是否展示
       markerList: [
-        {position: [110.97, 35.05], type: 1, title: '场站', text: '永济民生门站', isShow: true},
+        {position: [110.532883, 34.86948], type: 1, title: '场站', text: '永济民生门站', isShow: true},
         {position: [111.00, 35.08], type: 1, title: '场站', text: '运城民生北门站', isShow: true},
         {position: [111.01, 35.06], type: 1, title: '场站', text: '运城民生东门站', isShow: true},
         // {position: [111.04,35.06], type: 2, title: '调压箱', text: '调压箱', isShow: false},
