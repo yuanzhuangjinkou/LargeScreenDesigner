@@ -55,8 +55,11 @@ export default {
     }
   },
   methods: {
-    setCenter() {
-      this.map.setCenter([111.01, 35.03])
+    setCenter(param = [111.01, 35.03]) {
+      this.map.setCenter(param)
+    },
+    setZoom(param = 13) {
+      this.map.setZoom(param)
     },
     // 初始化地图
     initMap() {

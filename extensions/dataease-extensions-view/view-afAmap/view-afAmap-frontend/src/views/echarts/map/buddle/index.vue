@@ -49,8 +49,8 @@ export default {
       // position: 坐标, type: 展示图片样式, title: 分类, text: 名称, isShow: 是否展示
       markerList: [
         {position: [110.532883, 34.86948], type: 1, title: '场站', text: '永济民生门站', isShow: true},
-        {position: [111.00, 35.08], type: 1, title: '场站', text: '运城民生北门站', isShow: true},
-        {position: [111.01, 35.06], type: 1, title: '场站', text: '运城民生东门站', isShow: true},
+        {position: [110.944058, 35.161790], type: 1, title: '场站', text: '运城民生北门站', isShow: true},
+        {position: [111.073928, 35.126572], type: 1, title: '场站', text: '运城民生东门站', isShow: true},
         // {position: [111.04,35.06], type: 2, title: '调压箱', text: '调压箱', isShow: false},
         // {position: [110.98, 35.07], type: 6, title: '分输站', text: '分输站', isShow: false},
         {position: [111.037857, 35.04064], type: 4, title: '营业厅', text: '东城营业厅', isShow: false},
@@ -330,12 +330,23 @@ export default {
           const val = this.chart.data.x;
           if(val[0] === '调压箱') {
             await this.initData()
+            this.$nextTick(() => {
+              if (this.$refs.bmap) {
+                this.$refs.bmap.setCenter();
+                this.$refs.bmap.setZoom(13);
+              }
+            })
+          }
+          if(val[0] === '场站') {
+            this.$nextTick(() => {
+              if (this.$refs.bmap) {
+                this.$refs.bmap.setCenter();
+                this.$refs.bmap.setZoom(11);
+              }
+            })
           }
           this.stationClick(val)
           // this.$forceUpdate();
-        }
-        if (this.$refs.bmap) {
-          this.$refs.bmap.setCenter();
         }
       },
       deep: true,
